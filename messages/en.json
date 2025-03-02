@@ -17,7 +17,8 @@
         "submit": "Continue",
         "visaFree": "You can enter Bali visa-free!",
         "visaOnArrival": "You can get a visa on arrival in Bali!",
-        "visaRequired": "You need to obtain a visa before traveling to Bali"
+        "visaRequired": "You need to obtain a visa before traveling to Bali",
+        "arrivalDate": "Arrival date"
       },
       "visaDuration": {
         "stayDuration": "Stay duration: {days} days",

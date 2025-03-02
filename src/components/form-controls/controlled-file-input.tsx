@@ -46,7 +46,7 @@ export function ControlledFileInput<T extends FieldValues>({
   };
 
   return (
-    <div>
+    <>
       <Controller
         name={name}
         control={control}
@@ -67,12 +67,12 @@ export function ControlledFileInput<T extends FieldValues>({
       />
       
       {preview && (
-        <div className="mt-2">
+        <>
           {preview.startsWith('data:image') ? (
             <img 
               src={preview} 
               alt="Preview" 
-              className="max-w-xs h-auto rounded-lg"
+              className="w-full h-auto rounded-lg"
             />
           ) : (
             <object
@@ -92,8 +92,8 @@ export function ControlledFileInput<T extends FieldValues>({
               </div>
             </object>
           )}
-        </div>
+        </>
       )}
-    </div>
+    </>
   );
 }

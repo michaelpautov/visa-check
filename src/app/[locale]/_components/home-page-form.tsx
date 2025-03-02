@@ -8,11 +8,13 @@ import { useEffect } from "react";
 import { checkVisaRequirement } from "@/data/visa-requirements";
 import { VisaResult } from "./visa-result";
 import { ControlledFileInput } from "@/components/form-controls/controlled-file-input";
+import { ControlledDatePicker } from "@/components/form-controls/controlled-date-picker";
 interface FormValues {
   country: Country | null;
   visaResult: VisaCheckResult | null;
   selectedVisa: VisaDuration | null;
-  passportFile: unknown | null;
+  passportFile: File | null;
+  passportExpiryDate: Date | null;
 }
 
 interface VisaDuration {
@@ -39,6 +41,7 @@ export function HomePageForm() {
       visaResult: null,
       selectedVisa: null,
       passportFile: null,
+      passportExpiryDate: null,
     }
   });
 
@@ -46,8 +49,6 @@ export function HomePageForm() {
   const visaResult = watch("visaResult");
   const selectedVisa = watch("selectedVisa");
   const passportFile = watch("passportFile");
-
-  console.log(passportFile);
 
   useEffect(() => {
     if (country) {
@@ -64,10 +65,10 @@ export function HomePageForm() {
   return (
     <form 
       onSubmit={handleSubmit(onSubmit)} 
-      className="flex flex-col items-center grow pt-8"
+      className="flex flex-col items-center grow py-8"
     >
       <H3>{t("title")}</H3>
-      <div className="w-[280px] mt-4 space-y-4">
+      <div className="w-[280px] mt-4 space-y-4 overflow-hidden">
         <ControlledCountrySelect
           name="country"
           control={control}
@@ -77,6 +78,7 @@ export function HomePageForm() {
         />
         {visaResult && <VisaResult result={visaResult} onVisaSelect={handleVisaSelect} />}
         {selectedVisa && <ControlledFileInput name="passportFile" control={control} />}
+        {passportFile && <ControlledDatePicker placeholder={t("arrivalDate")} name="passportExpiryDate" control={control} />}
       </div>
     </form>
   );
