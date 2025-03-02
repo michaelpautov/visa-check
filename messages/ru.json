@@ -1,0 +1,36 @@
+{
+    "homePage": {
+      "title": "Добро пожаловать!"
+    },
+    "components":{
+      "header":{
+        "title": "Виза на Бали",
+        "signIn": "Войти",
+        "signOut": "Выйти"
+      },
+      "homePageForm":{
+        "title": "Получи визу на Бали",
+        "selectCountry": "Выберите страну",
+        "noResults": "Страны не найдены",
+        "searchCountry": "Поиск страны...",
+        "submit": "Продолжить",
+        "visaFree": "Вы можете въехать на Бали без визы!",
+        "visaOnArrival": "Вы можете получить визу по прибытии на Бали!",
+        "visaRequired": "Вам необходимо получить визу перед поездкой на Бали"
+      },
+      "visaDuration": {
+        "stayDuration": "Срок пребывания: {days} дней",
+        "price": "Стоимость: ${price}",
+        "extendable": "Можно продлить {maxExtensions} раз(а) для общего пребывания до {maxDays} дней"
+      },
+      "visaResult": {
+        "visaFree": "Вы можете въехать на Бали без визы!",
+        "visaOnArrival": "Вы можете получить визу по прибытии на Бали!",
+        "visaRequired": "Вам необходимо получить визу перед поездкой на Бали"
+      },
+      "fileInput": {
+        "pdfUnsupported": "Ваш браузер не поддерживает предпросмотр PDF",
+        "downloadPDF": "скачать PDF"
+      }
+    }
+  }

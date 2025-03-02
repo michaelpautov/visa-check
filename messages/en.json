@@ -1,0 +1,37 @@
+{
+    "HomePage": {
+      "title": "Hello world!",
+      "about": "Go to the about page"
+    },
+    "components": {
+      "header": {
+        "title": "Bali Visa",
+        "signIn": "Sign In",
+        "signOut": "Sign Out"
+      },
+      "homePageForm": {
+        "title": "Get Your Bali Visa",
+        "selectCountry": "Select your country",
+        "noResults": "No countries found",
+        "searchCountry": "Search for a country...",
+        "submit": "Continue",
+        "visaFree": "You can enter Bali visa-free!",
+        "visaOnArrival": "You can get a visa on arrival in Bali!",
+        "visaRequired": "You need to obtain a visa before traveling to Bali"
+      },
+      "visaDuration": {
+        "stayDuration": "Stay duration: {days} days",
+        "price": "Price: ${price}",
+        "extendable": "Can be extended {maxExtensions} times for a total stay of up to {maxDays} days"
+      },
+      "visaResult": {
+        "visaFree": "You can enter Bali visa-free!",
+        "visaOnArrival": "You can get a visa on arrival in Bali!",
+        "visaRequired": "You need to obtain a visa before traveling to Bali"
+      },
+      "fileInput": {
+        "pdfUnsupported": "Your browser does not support PDF preview",
+        "downloadPDF": "Download PDF"
+      }
+    }
+}
