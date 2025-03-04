@@ -1,4 +1,6 @@
 // Auto-generated from Bali.com scraper - Last updated: 2025-01-28T12:11:59.138Z
+import { VisaRequirement } from "@/types/visa/visa-requirement";
+
 export const visaFreeCountries = [
   "Brunei",
   "Cambodia",
@@ -104,7 +106,7 @@ export const visaOnArrivalCountries = [
   "Venezuela"
 ];
 
-export function checkVisaRequirement(country: string) {
+export function checkVisaRequirement(country: string): VisaRequirement {
   if (visaFreeCountries.includes(country)) {
     return {
       canEnter: true,

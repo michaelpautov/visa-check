@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-import { Header } from "./_components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
@@ -27,9 +26,8 @@ export default async function LocaleLayout({
   return (
     <ClerkProvider>
       <NextIntlClientProvider messages={messages}>
-        <div className="flex flex-col min-h-screen">
-          <Header/>
-          <main className="flex flex-1">{children}</main>
+        <div className="flex flex-col w-full min-h-screen overflow-hidden">
+          {children}
         </div>
       </NextIntlClientProvider>
     </ClerkProvider>

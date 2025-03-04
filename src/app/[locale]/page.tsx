@@ -1,11 +1,5 @@
-import { HomePageForm } from "./_components/home-page-form";
+import { HomeClient } from "./_components/home-client";
 
-export default function Home() {
-
-  return (
-    <>    
-      <HomePageForm />
-    </>
-
-  );
+export default function HomePage() {
+  return <HomeClient />;
 }

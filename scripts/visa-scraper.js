@@ -59,8 +59,8 @@ async function scrapeVisaInformation() {
     });
 
     // Save the scraped data
-    const outputPath = path.join(__dirname, '../src/data/scraped-visa-data.json');
-    await fs.promises.writeFile(outputPath, JSON.stringify(visaInfo, null, 2));
+    // const outputPath = path.join(__dirname, '../src/constants/scraped-visa-data.json');
+    // await fs.promises.writeFile(outputPath, JSON.stringify(visaInfo, null, 2));
 
     console.log(`✅ Successfully scraped visa information for ${visaInfo.length} countries`);
     return visaInfo;
@@ -81,37 +81,14 @@ async function updateVisaFreeCountries(visaInfo) {
     .map(info => info.country);
 
   const fileContent = `// Auto-generated from Bali.com scraper - Last updated: ${new Date().toISOString()}
-export const visaFreeCountries = ${JSON.stringify(visaFreeCountries, null, 2)};
 
-export const visaOnArrivalCountries = ${JSON.stringify(visaOnArrivalCountries, null, 2)};
+export const BALI_FREE_VISA_COUNTRIES = ${JSON.stringify(visaFreeCountries, null, 2)};
 
-export function checkVisaRequirement(country: string) {
-  if (visaFreeCountries.includes(country)) {
-    return {
-      canEnter: true,
-      entryType: 'visa-free',
-      duration: 30
-    };
-  }
-  
-  if (visaOnArrivalCountries.includes(country)) {
-    return {
-      canEnter: true, 
-      entryType: 'visa-on-arrival',
-      duration: 30
-    };
-  }
-  
-  return {
-    canEnter: false,
-    entryType: 'visa-required',
-    duration: 0
-  };
-}`;
+export const BALI_VISA_ON_ARRIVAL_COUNTRIES = ${JSON.stringify(visaOnArrivalCountries, null, 2)};`;
 
-  const outputPath = path.join(__dirname, '../src/data/visa-requirements.ts');
+  const outputPath = path.join(__dirname, '../src/constants/bali-visa-countries.ts');
   fs.writeFileSync(outputPath, fileContent);
-  console.log('✅ Successfully updated visa-requirements.ts');
+  console.log('✅ Successfully updated bali-visa-countries.ts');
 }
 
 async function main() {
