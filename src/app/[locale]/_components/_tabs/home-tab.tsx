@@ -1,9 +1,13 @@
 'use client'
 import { H1, Lead } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
+import { ROUTES_PATH } from "@/constants/routes";
+import { useNavigate } from "@/hooks/use-navigate";
 
 export function HomeTab() {
   const hasSavedApplication = false;
+
+  const openVisaApplication = useNavigate(ROUTES_PATH.VISA_APPLICATION);
 
   return (
     <div className="flex flex-col items-center max-w-4xl mx-auto space-y-8 py-8 min-h-[calc(100vh-0.5rem)]">
@@ -31,7 +35,12 @@ export function HomeTab() {
               Продолжить с заказом
             </Button>
           )}
-          <Button variant={hasSavedApplication ? "outline" : "default"} size="lg" className="w-full">
+          <Button 
+            onClick={openVisaApplication}
+            variant={hasSavedApplication ? "outline" : "default"} 
+            size="lg" 
+            className="w-full"
+          >
             Начать новое заявление
           </Button>
         </div>

@@ -23,6 +23,7 @@ interface CountrySelectProps {
   onChange: (country: Country | null) => void;
   placeholder: string;
   searchPlaceholder: string;
+  disabled?: boolean;
 }
 
 export function CountrySelect({
@@ -30,6 +31,7 @@ export function CountrySelect({
   onChange,
   placeholder,
   searchPlaceholder,
+  disabled = false,
 }: CountrySelectProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -63,6 +65,7 @@ export function CountrySelect({
           role="combobox"
           aria-expanded={open}
           className="w-full justify-between h-10"
+          disabled={disabled}
         >
           {value ? (
             <div className="flex items-center gap-2">
