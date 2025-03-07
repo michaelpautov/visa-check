@@ -1,6 +1,8 @@
 {
     "common": {
-      "continue": "Continue"
+      "continue": "Continue",
+      "next": "Next",
+      "submit": "Submit"
     },
     "components": {
       "header": {
@@ -32,6 +34,18 @@
       "fileInput": {
         "pdfUnsupported": "Your browser does not support PDF preview",
         "downloadPDF": "Download PDF"
+      },
+      "passportCountryStep": {
+        "title": "What are your travel plans",
+        "passportFrom": "My passport is from",
+        "visitCountry": "I want to visit"
+      },
+      "countrySelect": {
+        "placeholder": "Select",
+        "searchPlaceholder": "Search countries..."
+      },
+      "visaRoute": {
+        "passportFrom": "Passport from"
       }
     }
 }

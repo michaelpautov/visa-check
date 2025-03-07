@@ -10,7 +10,7 @@ export function HomeTab() {
   const openVisaApplication = useNavigate(ROUTES_PATH.VISA_APPLICATION);
 
   return (
-    <div className="flex flex-col items-center max-w-4xl mx-auto space-y-8 py-8 min-h-[calc(100vh-0.5rem)]">
+    <div className="flex flex-col items-center mx-auto space-y-8 py-8 h-full">
       {/* Логотип */}
       <div className="w-48 text-center">
         <span className="text-6xl font-bold">iVisa</span>
@@ -29,7 +29,7 @@ export function HomeTab() {
         </div>
 
         {/* Кнопки действий */}
-        <div className="space-y-4 mt-auto pb-20">
+        <div className="space-y-4 mt-auto">
           {hasSavedApplication && (
             <Button  size="lg" className="w-full">
               Продолжить с заказом

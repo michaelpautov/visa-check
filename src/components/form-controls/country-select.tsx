@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { countries } from 'countries-list';
 import * as CountryFlags from 'country-flag-icons/react/3x2';
+import { useTranslations } from 'next-intl';
 import {
   Popover,
   PopoverContent,
@@ -11,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { ChevronsUpDown } from "lucide-react";
+import { getFlag } from "@/lib/get-flag";
 
 export interface Country {
   code: string;
@@ -21,8 +23,8 @@ export interface Country {
 interface CountrySelectProps {
   value: Country | null;
   onChange: (country: Country | null) => void;
-  placeholder: string;
-  searchPlaceholder: string;
+  placeholder?: string;
+  searchPlaceholder?: string;
   disabled?: boolean;
 }
 
@@ -33,6 +35,7 @@ export function CountrySelect({
   searchPlaceholder,
   disabled = false,
 }: CountrySelectProps) {
+  const t = useTranslations('components.countrySelect');
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -52,11 +55,6 @@ export function CountrySelect({
     );
   });
 
-  const getFlag = (code: string) => {
-    const FlagComponent = CountryFlags[code as keyof typeof CountryFlags];
-    return FlagComponent ? <FlagComponent className="w-6 h-4" /> : null;
-  };
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -73,7 +71,7 @@ export function CountrySelect({
               <span>{value.name}</span>
             </div>
           ) : (
-            <span>{placeholder}</span>
+            <span>{placeholder || t('placeholder')}</span>
           )}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -81,7 +79,7 @@ export function CountrySelect({
       <PopoverContent className="w-[280px] p-0">
         <div className="flex flex-col">
           <Input
-            placeholder={searchPlaceholder}
+            placeholder={searchPlaceholder || t('searchPlaceholder')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="border-0 focus-visible:ring-0"

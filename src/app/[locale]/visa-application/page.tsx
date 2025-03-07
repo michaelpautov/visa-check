@@ -1,5 +1,6 @@
-import { VisaApplicationClient } from "./_components/visa-application-client";
+import { VisaApplicationClient } from './_components/visa-application-client';
 
-export default function VisaApplicationPage() {
-  return <VisaApplicationClient/>;
+
+export default function VisaApplication() {
+  return <VisaApplicationClient />;
 }

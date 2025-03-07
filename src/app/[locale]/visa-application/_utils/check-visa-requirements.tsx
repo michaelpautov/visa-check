@@ -1,6 +1,8 @@
+import { BALI_FREE_VISA_COUNTRIES, BALI_VISA_ON_ARRIVAL_COUNTRIES } from "@/constants/bali-visa-countries";
+import { VisaRequirement } from "@/types/visa/visa-requirement";
 
 export function checkVisaRequirement(country: string): VisaRequirement {
-  if (visaFreeCountries.includes(country)) {
+  if (BALI_FREE_VISA_COUNTRIES.includes(country)) {
     return {
       canEnter: true,
       entryType: 'visa-free',
@@ -16,7 +18,7 @@ export function checkVisaRequirement(country: string): VisaRequirement {
     };
   }
   
-  if (visaOnArrivalCountries.includes(country)) {
+  if (BALI_VISA_ON_ARRIVAL_COUNTRIES.includes(country)) {
     return {
       canEnter: true, 
       entryType: 'visa-on-arrival',

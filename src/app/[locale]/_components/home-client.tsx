@@ -9,13 +9,13 @@ export function HomeClient() {
   const triggerClassName = 'flex-1 py-2 data-[state=active]:bg-primary/10'
 
   return (
-    <Tabs defaultValue="home" className="w-full h-full flex flex-col p-6 relative">
-      <div className="flex-1 overflow-auto pb-24">
-        <TabsContent value="home"><HomeTab /></TabsContent>
-        <TabsContent value="documents">Documents</TabsContent>
-        <TabsContent value="profile">Profile</TabsContent>
+    <Tabs defaultValue="home" className="w-full h-screen flex flex-col">
+      <div className="flex-1 p-6">
+        <TabsContent value="home" className="h-full"><HomeTab /></TabsContent>
+        <TabsContent value="documents" className="h-full">Documents</TabsContent>
+        <TabsContent value="profile" className="h-full">Profile</TabsContent>
       </div>
-      <TabsList className="fixed rounded-none bottom-6 left-0 right-0 bg-background h-16 w-full grid grid-cols-3 p-6">
+      <TabsList className="flex-none rounded-none bg-background w-full flex justify-between items-center p-6 h-auto ">
         <TabsTrigger 
           value="home" 
           className={triggerClassName}

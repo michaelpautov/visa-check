@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { VisaApplicationHeader } from "./_components/visa-application-header";
+import { VisaStepProvider } from "./_providers/visa-step-provider";
+import { VisaStepLayout } from "./_components/visa-step-layout";
 
 export const metadata: Metadata = {
   title: 'Выбор страны | Виза на Бали',
@@ -12,11 +13,10 @@ export default async function VisaApplicationLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col w-full min-h-screen">
-      <VisaApplicationHeader className="py-4" />
-      <main className="flex flex-col flex-1 overflow-auto px-4">
+    <VisaStepProvider>
+      <VisaStepLayout>
         {children}
-      </main>
-    </div>
+      </VisaStepLayout>
+    </VisaStepProvider>
   );
 }

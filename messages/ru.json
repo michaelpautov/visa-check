@@ -32,6 +32,23 @@
       "fileInput": {
         "pdfUnsupported": "Ваш браузер не поддерживает предпросмотр PDF",
         "downloadPDF": "скачать PDF"
+      },
+      "passportCountryStep": {
+        "title": "Какие у вас планы на путешествие",
+        "passportFrom": "Мой паспорт из",
+        "visitCountry": "Я хочу посетить"
+      },
+      "countrySelect": {
+        "placeholder": "Выбрать",
+        "searchPlaceholder": "Поиск стран..."
+      },
+      "visaRoute": {
+        "passportFrom": "Паспорт из"
       }
+    },
+    "common": {
+      "continue": "Продолжить",
+      "next": "Далее",
+      "submit": "Отправить"
     }
   }
