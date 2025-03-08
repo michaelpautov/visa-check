@@ -30,7 +30,9 @@
       "visaResult": {
         "visaFree": "You can enter Bali visa-free!",
         "visaOnArrival": "You can get a visa on arrival in Bali!",
-        "visaRequired": "You need to obtain a visa before traveling to Bali"
+        "visaRequired": "You need to obtain a visa before traveling to Bali",
+        "visaNotRequired": "No visa required",
+        "visaIsRequired": "Visa is required for travel"
       },
       "fileInput": {
         "pdfUnsupported": "Your browser does not support PDF preview",
@@ -47,6 +49,10 @@
       },
       "visaRoute": {
         "passportFrom": "Passport from"
+      },
+      "visaTypeStep": {
+        "selectAdditionalServices": "Select additional services",
+        "selectOption": "Select an option"
       }
     }
 }

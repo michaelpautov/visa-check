@@ -27,7 +27,9 @@
       "visaResult": {
         "visaFree": "Вы можете въехать на Бали без визы!",
         "visaOnArrival": "Вы можете получить визу по прибытии на Бали!",
-        "visaRequired": "Вам необходимо получить визу перед поездкой на Бали"
+        "visaRequired": "Вам необходимо получить визу перед поездкой на Бали",
+        "visaNotRequired": "Вам не нужна виза",
+        "visaIsRequired": "Виза требуется для поездок"
       },
       "fileInput": {
         "pdfUnsupported": "Ваш браузер не поддерживает предпросмотр PDF",
@@ -44,6 +46,10 @@
       },
       "visaRoute": {
         "passportFrom": "Паспорт из"
+      },
+      "visaTypeStep": {
+        "selectAdditionalServices": "Выберите дополнительные услуги",
+        "selectOption": "Выберите вариант"
       }
     },
     "common": {
