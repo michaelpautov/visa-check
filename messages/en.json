@@ -53,6 +53,14 @@
       "visaTypeStep": {
         "selectAdditionalServices": "Select additional services",
         "selectOption": "Select an option"
+      },
+      "visaTypeCard": {
+        "learnMore": "Details",
+        "days": "{days} days initial",
+        "extendable": "{count}x extendable",
+        "nonExtendable": "Non-extendable",
+        "maxDays": "Max {days} days total",
+        "price": "{price} USD"
       }
     }
 }

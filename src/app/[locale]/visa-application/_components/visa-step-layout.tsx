@@ -12,7 +12,7 @@ interface StepLayoutProps {
 }
 
 export function VisaStepLayout({ children }: StepLayoutProps) {
-  const { currentStep, steps, goToNextStep, goToPreviousStep, canProceed, cleanState } = useVisaStep();
+  const { currentStep, steps, goToNextStep, goToPreviousStep, canProceed, cleanState, cleanCurrentStep } = useVisaStep();
   const t = useTranslations('common');
 
   const navigateBack = useNavigateBack()
@@ -22,6 +22,7 @@ export function VisaStepLayout({ children }: StepLayoutProps) {
       cleanState()
       navigateBack()
     } else {
+      cleanCurrentStep()
       goToPreviousStep();
     }
   }
@@ -33,7 +34,7 @@ export function VisaStepLayout({ children }: StepLayoutProps) {
           <Button className="-ml-4 hover:bg-transparent hover:text-primary" variant="ghost" onClick={handleBack}>
             <FaChevronLeft className="w-4 h-4" />
           </Button>
-          {currentStep !== 'passportCountry' && <Button className='focus:no-underline hover:no-underline' variant="link" onClick={navigateBack}>{t('saveAndExit')}</Button>}
+          {currentStep !== 'passportCountry' && <Button variant="link" onClick={navigateBack}>{t('saveAndExit')}</Button>}
         </div>
         <Progress value={((steps.indexOf(currentStep) + 1) / steps.length) * 100} />
       </div>

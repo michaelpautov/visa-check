@@ -1,9 +1,10 @@
 'use client'
 import { useVisaStep } from "../_providers/visa-step-provider";
-import { PassportCountryStep } from "../_components-steps/steps/passport-country-step";
+import { PassportCountryStep } from "../_components-steps/passport-country-step";
 import { VisaTypeStep } from "../_components-steps/visa-type-step";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { VisaArrivalDatesStep } from "../_components-steps/visa-arrival-dates-step";
 
 function StepContent() {
   const { currentStep, steps } = useVisaStep();
@@ -52,6 +53,8 @@ function StepContent() {
               return <PassportCountryStep />;
             case 'visaType':
               return <VisaTypeStep />;
+            case 'visaArrivalDates':
+              return <VisaArrivalDatesStep />;
             default:
               return null;
           }

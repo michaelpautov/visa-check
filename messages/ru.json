@@ -50,6 +50,14 @@
       "visaTypeStep": {
         "selectAdditionalServices": "Выберите дополнительные услуги",
         "selectOption": "Выберите вариант"
+      },
+      "visaTypeCard": {
+        "learnMore": "Подробнее",
+        "days": "{days} дней изначально",
+        "extendable": "можно продлить {count} раз(а)",
+        "nonExtendable": "Без продления",
+        "maxDays": "Максимум {days} дней всего",
+        "price": "{price} USD"
       }
     },
     "common": {
@@ -58,4 +66,5 @@
       "submit": "Отправить",
       "saveAndExit": "Сохранить и выйти"
     }
+  
   }

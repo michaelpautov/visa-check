@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import VisaSkeleton from '../_components/visa-skeleton';
 import { LOCAL_STORAGE_KEYS } from '@/constants/local-storage';
 
-export type Step = 'passportCountry' | 'visaType';
+export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates';
 
 export const passportCountrySchema = z.object({
   passportCountry: z.object({
@@ -22,24 +22,42 @@ export const passportCountrySchema = z.object({
 });
 
 export const visaTypeSchema = z.object({
-  visaType: z.string().min(2, 'Visa type is required'),
+  selectedVisas: z.array(z.object({
+    days: z.number(),
+    price: z.number(),
+    extendable: z.boolean(),
+    maxExtensions: z.number(),
+    maxTotalDays: z.number(),
+    type: z.string().optional(),
+    shortName: z.string().optional(),
+    officialName: z.string().optional(),
+    requirements: z.array(z.string()).optional()
+  }))
+});
+
+export const visaArrivalDatesSchema = z.object({
+  arrivalDate: z.date().optional(),
+  departureDate: z.date().optional(),
 });
 
 // Combined schema for the entire form
 export const formSchema = z.object({
   passportCountry: passportCountrySchema,
   visaType: visaTypeSchema,
+  visaArrivalDates: visaArrivalDatesSchema,
 });
 
 // TypeScript types from Zod schemas
 export type PasportCountry = z.infer<typeof passportCountrySchema>;
 export type VisaType = z.infer<typeof visaTypeSchema>;
+export type VisaArrivalDates = z.infer<typeof visaArrivalDatesSchema>;
 export type FormData = z.infer<typeof formSchema>;
 
 // Type for the forms map
 type StepForms = {
   passportCountry: UseFormReturn<PasportCountry>;
   visaType: UseFormReturn<VisaType>;
+  visaArrivalDates: UseFormReturn<VisaArrivalDates>;
 };
 
 interface StepContextType {
@@ -54,11 +72,12 @@ interface StepContextType {
   formData: Partial<FormData>;
   isLoading: boolean;
   cleanState: () => void;
+  cleanCurrentStep: () => void;
 }
 
 const StepContext = createContext<StepContextType | undefined>(undefined);
 
-const STEPS: Step[] = ['passportCountry', 'visaType'];
+const STEPS: Step[] = ['passportCountry', 'visaType', 'visaArrivalDates'];
 const STORAGE_KEY = LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE;
 
 interface StoredState {
@@ -81,8 +100,18 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(STORAGE_KEY);
     passportCountryForm.reset();
     visaTypeForm.reset();
+    visaArrivalDatesForm.reset();
     // Re-enable saving to storage after state is cleaned
     setTimeout(() => setShouldSaveToStorage(true), 0);
+  };
+
+  const cleanCurrentStep = () => {
+    forms[currentStep].reset();
+    setFormData(prev => {
+      const newFormData = { ...prev };
+      delete newFormData[currentStep];
+      return newFormData;
+    });
   };
 
   // Load state from localStorage after mount
@@ -109,7 +138,13 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
   const visaTypeForm = useForm<VisaType>({
     resolver: zodResolver(visaTypeSchema),
     mode: 'onChange',
-    defaultValues: formData.visaType || { visaType: '' },
+    defaultValues: formData.visaType || { selectedVisas: [] },
+  });
+
+  const visaArrivalDatesForm = useForm<VisaArrivalDates>({
+    resolver: zodResolver(visaArrivalDatesSchema),
+    mode: 'onChange',
+    defaultValues: formData.visaArrivalDates,
   });
 
   // Update forms when formData changes from localStorage
@@ -121,6 +156,9 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
       if (formData.visaType) {
         visaTypeForm.reset(formData.visaType);
       }
+      if (formData.visaArrivalDates) {
+        visaArrivalDatesForm.reset(formData.visaArrivalDates);
+      }
     }
     setTimeout(() => {
       setIsLoading(false);
@@ -130,6 +168,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
   const forms: StepForms = {
     passportCountry: passportCountryForm,
     visaType: visaTypeForm,
+    visaArrivalDates: visaArrivalDatesForm,
   };
 
   // Save state to localStorage whenever it changes
@@ -148,6 +187,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     const currentForm = forms[currentStep];
     const { formState } = currentForm;
     const hasValidExistingData = Boolean(formData[currentStep as keyof typeof formData]) && formState.isValid;
+    // Add small delay to allow validation to complete
     setCanProceed(hasValidExistingData || (formState.isDirty && formState.isValid));
   }, [currentStep, forms[currentStep].formState, formData]);
 
@@ -191,6 +231,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
         formData,
         isLoading,
         cleanState,
+        cleanCurrentStep,
       }}
     >
       {children}

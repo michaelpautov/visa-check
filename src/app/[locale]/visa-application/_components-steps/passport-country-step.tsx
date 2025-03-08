@@ -1,5 +1,5 @@
 import { H1 } from '@/components/ui/typography';
-import { useVisaStep } from '../../_providers/visa-step-provider';
+import { useVisaStep } from '../_providers/visa-step-provider';
 import { ControlledCountrySelect } from '@/components/form-controls/controlled-country-select';
 import { useTranslations } from 'next-intl';
 

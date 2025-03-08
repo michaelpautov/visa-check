@@ -5,6 +5,7 @@ export interface VisaDuration {
   maxExtensions: number;
   maxTotalDays: number;
   type?: string;
-  name?: string;
+  shortName?: string;
+  officialName?: string;
   requirements?: string[];
 }
