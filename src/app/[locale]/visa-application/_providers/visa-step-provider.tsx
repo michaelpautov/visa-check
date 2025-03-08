@@ -3,8 +3,8 @@ import { createContext, useContext, ReactNode, useState, useEffect } from 'react
 import { UseFormReturn, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Skeleton } from '@/components/ui/skeleton';
 import VisaSkeleton from '../_components/visa-skeleton';
+import { LOCAL_STORAGE_KEYS } from '@/constants/local-storage';
 
 export type Step = 'passportCountry' | 'visaType';
 
@@ -53,12 +53,13 @@ interface StepContextType {
   forms: StepForms;
   formData: Partial<FormData>;
   isLoading: boolean;
+  cleanState: () => void;
 }
 
 const StepContext = createContext<StepContextType | undefined>(undefined);
 
 const STEPS: Step[] = ['passportCountry', 'visaType'];
-const STORAGE_KEY = 'visaApplicationState';
+const STORAGE_KEY = LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE;
 
 interface StoredState {
   currentStep: Step;
@@ -70,6 +71,19 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
   const [canProceed, setCanProceed] = useState(false);
   const [formData, setFormData] = useState<Partial<FormData>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [shouldSaveToStorage, setShouldSaveToStorage] = useState(true);
+
+  const cleanState = () => {
+    setShouldSaveToStorage(false);
+    setCurrentStep('passportCountry');
+    setFormData({});
+    setCanProceed(false);
+    localStorage.removeItem(STORAGE_KEY);
+    passportCountryForm.reset();
+    visaTypeForm.reset();
+    // Re-enable saving to storage after state is cleaned
+    setTimeout(() => setShouldSaveToStorage(true), 0);
+  };
 
   // Load state from localStorage after mount
   useEffect(() => {
@@ -120,21 +134,22 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
 
   // Save state to localStorage whenever it changes
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && shouldSaveToStorage) {
       const state: StoredState = {
         currentStep,
         formData
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
-  }, [currentStep, formData, isLoading]);
+  }, [currentStep, formData, isLoading, shouldSaveToStorage]);
 
   // Update canProceed based on form validation
   useEffect(() => {
     const currentForm = forms[currentStep];
     const { formState } = currentForm;
-    setCanProceed(formState.isDirty && formState.isValid);
-  }, [currentStep, forms[currentStep].formState]);
+    const hasValidExistingData = Boolean(formData[currentStep as keyof typeof formData]) && formState.isValid;
+    setCanProceed(hasValidExistingData || (formState.isDirty && formState.isValid));
+  }, [currentStep, forms[currentStep].formState, formData]);
 
   const goToNextStep = () => {
     const currentIndex = STEPS.indexOf(currentStep);
@@ -175,6 +190,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
         forms,
         formData,
         isLoading,
+        cleanState,
       }}
     >
       {children}

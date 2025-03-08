@@ -2,7 +2,8 @@
     "common": {
       "continue": "Continue",
       "next": "Next",
-      "submit": "Submit"
+      "submit": "Submit",
+      "saveAndExit": "Save and exit"
     },
     "components": {
       "header": {

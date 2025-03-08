@@ -3,11 +3,17 @@ import { H1, Lead } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { ROUTES_PATH } from "@/constants/routes";
 import { useNavigate } from "@/hooks/use-navigate";
+import { LOCAL_STORAGE_KEYS } from "@/constants/local-storage";
 
 export function HomeTab() {
-  const hasSavedApplication = false;
+  const hasSavedApplication = !!localStorage.getItem(LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE);
 
   const openVisaApplication = useNavigate(ROUTES_PATH.VISA_APPLICATION);
+
+  const handleOpenNewVisaApplication = () => {
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE);
+    openVisaApplication();
+  }
 
   return (
     <div className="flex flex-col items-center mx-auto space-y-8 py-8 h-full">
@@ -31,12 +37,16 @@ export function HomeTab() {
         {/* Кнопки действий */}
         <div className="space-y-4 mt-auto">
           {hasSavedApplication && (
-            <Button  size="lg" className="w-full">
+            <Button 
+              onClick={openVisaApplication}
+              size="lg" 
+              className="w-full"
+            >
               Продолжить с заказом
             </Button>
           )}
           <Button 
-            onClick={openVisaApplication}
+            onClick={handleOpenNewVisaApplication}
             variant={hasSavedApplication ? "outline" : "default"} 
             size="lg" 
             className="w-full"
