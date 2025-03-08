@@ -58,6 +58,11 @@
         "nonExtendable": "Без продления",
         "maxDays": "Максимум {days} дней всего",
         "price": "{price} USD"
+      },
+      "visaInfo": {
+        "days": "{days}д",
+        "maxDays": "до {days}д",
+        "notExtendable": "-"
       }
     },
     "common": {

@@ -61,6 +61,11 @@
         "nonExtendable": "Non-extendable",
         "maxDays": "Max {days} days total",
         "price": "{price} USD"
+      },
+      "visaInfo": {
+        "days": "{days}d",
+        "maxDays": "up to {days}d",
+        "notExtendable": "-"
       }
     }
 }
