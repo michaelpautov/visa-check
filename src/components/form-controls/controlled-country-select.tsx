@@ -21,20 +21,20 @@ export function ControlledCountrySelect<T extends FieldValues>({
   rules
 }: ControlledCountrySelectProps<T>) {
   return (
-    <FormControl label={label}>
-      <Controller
-        name={name}
-        control={control}
-        rules={rules}
-        render={({ field }) => (
+    <Controller
+      name={name}
+      control={control}
+      rules={rules}
+      render={({ field, fieldState: { error } }) => (
+        <FormControl label={label} error={error}>
           <CountrySelect
             value={field.value}
             onChange={field.onChange}
             placeholder={placeholder}
             searchPlaceholder={searchPlaceholder}
           />
-        )}
-      />
-    </FormControl>
+        </FormControl>
+      )}
+    />
   );
 } 

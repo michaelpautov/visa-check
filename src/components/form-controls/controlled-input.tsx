@@ -1,37 +1,42 @@
 'use client'
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import { DatePicker } from "./date-picker";
+import { Input } from "@/components/ui/input";
 import { FormControl } from "./form-control";
 
-interface ControlledDatePickerProps<T extends FieldValues> {
+interface ControlledInputProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
   rules?: Record<string, unknown>;
-  className?: string;
-  placeholder?: string;
   label?: string;
+  placeholder?: string;
+  type?: string;
+  disabled?: boolean;
+  className?: string;
 }
 
-export function ControlledDatePicker<T extends FieldValues>({
+export function ControlledInput<T extends FieldValues>({
   name,
   control,
   rules,
-  className,
+  label,
   placeholder,
-  label
-}: ControlledDatePickerProps<T>) {
+  type = "text",
+  disabled = false,
+  className,
+}: ControlledInputProps<T>) {
   return (
     <Controller
       name={name}
       control={control}
       rules={rules}
-      render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
+      render={({ field, fieldState: { error } }) => (
         <FormControl label={label} error={error}>
-          <DatePicker
-            value={value as Date}
-            onChange={onChange}
-            className={className}
+          <Input
+            id={name}
+            type={type}
             placeholder={placeholder}
+            disabled={disabled}
+            className={className}
             {...field}
           />
         </FormControl>

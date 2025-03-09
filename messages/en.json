@@ -23,6 +23,14 @@
         "visaRequired": "You need to obtain a visa before traveling to Bali",
         "arrivalDate": "Arrival date"
       },
+      "orderCard": {
+        "validFor": "Valid for",
+        "maxStay": "Max. stay",
+        "entries": "Number of entries",
+        "singleEntry": "Single entry",
+        "travelers": "Travelers",
+        "days": "days"
+      },
       "visaDuration": {
         "stayDuration": "Stay duration: {days} days",
         "price": "Price: ${price}",
@@ -79,6 +87,19 @@
         "secureEncryption": "Your information is securely encrypted.",
         "dataOwnership": "Your data belongs to you, and no one can access it without your permission.",
         "ifYouDontHaveIt": "If you don't have it, you can return to this step later."
+      },
+      "visaPersonalDataStep": {
+        "title": "Personal Data",
+        "subtitle": "They should match your passport data",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "dateOfBirth": "Date of Birth"
+      },
+      "expectDeliveryDate": {
+        "text": "Expected delivery date: Tomorrow by 16:02"
+      },
+      "visaOrderStep": {
+        "title": "Order Overview"
       }
     }
 }

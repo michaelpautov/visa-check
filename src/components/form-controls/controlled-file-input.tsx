@@ -3,19 +3,22 @@ import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { useTranslations } from 'next-intl';
+import { FormControl } from "./form-control";
 
 interface ControlledFileInputProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
   rules?: Record<string, unknown>;
   accept?: string;
+  label?: string;
 }
 
 export function ControlledFileInput<T extends FieldValues>({
   name,
   control,
   rules,
-  accept
+  accept,
+  label
 }: ControlledFileInputProps<T>) {
   const t = useTranslations('components.fileInput');
   const [preview, setPreview] = useState<string | null>(null);
@@ -51,18 +54,20 @@ export function ControlledFileInput<T extends FieldValues>({
         name={name}
         control={control}
         rules={rules}
-        render={({ field: { onChange, ...field } }) => (
-          <Input
-            type="file"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              onChange(file);
-              handleFileChange(file);
-            }}
-            accept={accept}
-            {...field}
-            value={undefined}
-          />
+        render={({ field: { onChange, ...field }, fieldState: { error } }) => (
+          <FormControl label={label} error={error}>
+            <Input
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                onChange(file);
+                handleFileChange(file);
+              }}
+              accept={accept}
+              {...field}
+              value={undefined}
+            />
+          </FormControl>
         )}
       />
       

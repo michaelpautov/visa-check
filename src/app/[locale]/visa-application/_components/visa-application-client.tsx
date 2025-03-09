@@ -1,11 +1,14 @@
 'use client'
 import { useVisaStep } from "../_providers/visa-step-provider";
-import { PassportCountryStep } from "../_components-steps/passport-country-step";
+import { VisaTripPlanStep } from "../_components-steps/visa-trip-plan-step";
 import { VisaTypeStep } from "../_components-steps/visa-type-step";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { VisaArrivalDatesStep } from "../_components-steps/visa-arrival-dates-step";
 import { VisaFilesStep } from "../_components-steps/visa-files-step";
+import { VisaPersonalDataStep } from "../_components-steps/visa-personal-data-step";
+import { VisaPassportInformationStep } from "../_components-steps/visa-passport-information-step";
+import { VisaOrderStep } from "../_components-steps/visa-order-step";
 
 function StepContent() {
   const { currentStep, steps } = useVisaStep();
@@ -51,13 +54,19 @@ function StepContent() {
         {(() => {
           switch (currentStep) {
             case 'passportCountry':
-              return <PassportCountryStep />;
+              return <VisaTripPlanStep />;
             case 'visaType':
               return <VisaTypeStep />;
             case 'visaArrivalDates':
               return <VisaArrivalDatesStep />;
             case 'visaFiles':
               return <VisaFilesStep />;
+            case 'visaPersonalData':
+              return <VisaPersonalDataStep />;
+            case 'visaPassportInformation':
+              return <VisaPassportInformationStep />;
+            case 'visaOrder':
+              return <VisaOrderStep />;
             default:
               return null;
           }

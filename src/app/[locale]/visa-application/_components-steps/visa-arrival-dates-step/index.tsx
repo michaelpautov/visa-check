@@ -1,5 +1,5 @@
 import { H1 } from "@/components/ui/typography";
-import { VisaInfo } from "./visa-info";
+import { VisaInfo } from "../../_components/visa-info";
 import { VisaStepContainer } from "../../_components/visa-step-container";
 import { useVisaStep } from "../../_providers/visa-step-provider";
 import { ControlledDatePicker } from "@/components/form-controls/controlled-date-picker";
