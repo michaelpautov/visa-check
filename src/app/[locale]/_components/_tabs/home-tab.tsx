@@ -6,7 +6,7 @@ import { useNavigate } from "@/hooks/use-navigate";
 import { LOCAL_STORAGE_KEYS } from "@/constants/local-storage";
 
 export function HomeTab() {
-  const hasSavedApplication = !!localStorage.getItem(LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE);
+  const hasSavedApplication = Boolean(localStorage.getItem(LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE));
 
   const openVisaApplication = useNavigate(ROUTES_PATH.VISA_APPLICATION);
 
