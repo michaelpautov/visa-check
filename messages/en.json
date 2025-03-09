@@ -3,7 +3,8 @@
       "continue": "Continue",
       "next": "Next",
       "submit": "Submit",
-      "saveAndExit": "Save and exit"
+      "saveAndExit": "Save and exit",
+      "skip": "Skip for now"
     },
     "components": {
       "header": {
@@ -66,6 +67,18 @@
         "days": "{days}d",
         "maxDays": "up to {days}d",
         "notExtendable": "-"
+      },
+      "visaArrivalDatesStep": {
+        "title": "Your trip details",
+        "arrivalDate": "When are you arriving in {country}?",
+        "departureDate": "When are you leaving {country}?"
+      },
+      "visaFilesStep": {
+        "title": "Let's upload your documents",
+        "scanPassport": "Save time on filling out the application by scanning your passport.",
+        "secureEncryption": "Your information is securely encrypted.",
+        "dataOwnership": "Your data belongs to you, and no one can access it without your permission.",
+        "ifYouDontHaveIt": "If you don't have it, you can return to this step later."
       }
     }
 }

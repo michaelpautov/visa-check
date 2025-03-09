@@ -27,13 +27,13 @@ export function DatePicker({ value, onChange, className, placeholder }: DatePick
         <Button
           variant={"outline"}
           className={cn(
-            "w-[280px] justify-start text-left font-normal",
+            "w-full justify-start text-left font-normal",
             !value && "text-muted-foreground",
             className
           )}
         >
-          <FiCalendar className="mr-2 h-4 w-4" />
           {value ? format(value, "PPP") : <span>{placeholder}</span>}
+          <FiCalendar className="ml-auto h-4 w-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

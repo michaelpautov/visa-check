@@ -2,13 +2,14 @@ import { H1 } from '@/components/ui/typography';
 import { useVisaStep } from '../_providers/visa-step-provider';
 import { ControlledCountrySelect } from '@/components/form-controls/controlled-country-select';
 import { useTranslations } from 'next-intl';
+import { VisaStepContainer } from '../_components/visa-step-container';
 
 export function PassportCountryStep() {
   const { forms: { passportCountry: form } } = useVisaStep();
   const t = useTranslations('components.passportCountryStep');
   
   return (
-    <div className="space-y-6">
+    <VisaStepContainer>
       <H1>{t('title')}</H1>
       <ControlledCountrySelect
         label={t('passportFrom')}
@@ -20,6 +21,6 @@ export function PassportCountryStep() {
         name="flyToCountry"
         control={form.control}
       />
-    </div>
+    </VisaStepContainer>
   );
 } 

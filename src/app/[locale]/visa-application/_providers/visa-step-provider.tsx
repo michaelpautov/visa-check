@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import VisaSkeleton from '../_components/visa-skeleton';
 import { LOCAL_STORAGE_KEYS } from '@/constants/local-storage';
 
-export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates';
+export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates' | 'visaFiles';
 
 export const passportCountrySchema = z.object({
   passportCountry: z.object({
@@ -40,17 +40,23 @@ export const visaArrivalDatesSchema = z.object({
   departureDate: z.date().optional(),
 });
 
+export const visaFilesSchema = z.object({
+  visaFiles: z.array(z.string()),
+});
+
 // Combined schema for the entire form
 export const formSchema = z.object({
   passportCountry: passportCountrySchema,
   visaType: visaTypeSchema,
   visaArrivalDates: visaArrivalDatesSchema,
+  visaFiles: visaFilesSchema,
 });
 
 // TypeScript types from Zod schemas
 export type PasportCountry = z.infer<typeof passportCountrySchema>;
 export type VisaType = z.infer<typeof visaTypeSchema>;
 export type VisaArrivalDates = z.infer<typeof visaArrivalDatesSchema>;
+export type VisaFiles = z.infer<typeof visaFilesSchema>;
 export type FormData = z.infer<typeof formSchema>;
 
 // Type for the forms map
@@ -58,6 +64,7 @@ type StepForms = {
   passportCountry: UseFormReturn<PasportCountry>;
   visaType: UseFormReturn<VisaType>;
   visaArrivalDates: UseFormReturn<VisaArrivalDates>;
+  visaFiles: UseFormReturn<VisaFiles>;
 };
 
 interface StepContextType {
@@ -77,7 +84,7 @@ interface StepContextType {
 
 const StepContext = createContext<StepContextType | undefined>(undefined);
 
-const STEPS: Step[] = ['passportCountry', 'visaType', 'visaArrivalDates'];
+const STEPS: Step[] = ['passportCountry', 'visaType', 'visaArrivalDates', 'visaFiles'];
 const STORAGE_KEY = LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE;
 
 interface StoredState {
@@ -101,6 +108,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     passportCountryForm.reset();
     visaTypeForm.reset();
     visaArrivalDatesForm.reset();
+    visaFilesForm.reset();
     // Re-enable saving to storage after state is cleaned
     setTimeout(() => setShouldSaveToStorage(true), 0);
   };
@@ -147,6 +155,12 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     defaultValues: formData.visaArrivalDates,
   });
 
+  const visaFilesForm = useForm<VisaFiles>({
+    resolver: zodResolver(visaFilesSchema),
+    mode: 'onChange',
+    defaultValues: formData.visaFiles || { visaFiles: [] },
+  });
+
   // Update forms when formData changes from localStorage
   useEffect(() => {
     if (formData) {
@@ -159,6 +173,9 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
       if (formData.visaArrivalDates) {
         visaArrivalDatesForm.reset(formData.visaArrivalDates);
       }
+      if (formData.visaFiles) {
+        visaFilesForm.reset(formData.visaFiles);
+      }
     }
     setTimeout(() => {
       setIsLoading(false);
@@ -169,6 +186,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     passportCountry: passportCountryForm,
     visaType: visaTypeForm,
     visaArrivalDates: visaArrivalDatesForm,
+    visaFiles: visaFilesForm,
   };
 
   // Save state to localStorage whenever it changes

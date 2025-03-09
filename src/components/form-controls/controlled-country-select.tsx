@@ -1,7 +1,7 @@
 'use client'
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import { CountrySelect } from "./country-select";
-import { Label } from "@/components/ui/label";
+import { FormControl } from "./form-control";
 
 interface ControlledCountrySelectProps<T extends FieldValues> {
   name: Path<T>;
@@ -21,8 +21,7 @@ export function ControlledCountrySelect<T extends FieldValues>({
   rules
 }: ControlledCountrySelectProps<T>) {
   return (
-    <div className="space-y-2">
-      {label && <Label>{label}</Label>}
+    <FormControl label={label}>
       <Controller
         name={name}
         control={control}
@@ -36,6 +35,6 @@ export function ControlledCountrySelect<T extends FieldValues>({
           />
         )}
       />
-    </div>
+    </FormControl>
   );
 } 

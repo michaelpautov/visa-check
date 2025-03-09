@@ -47,9 +47,9 @@ export function VisaStepLayout({ children }: StepLayoutProps) {
         <Button
           onClick={goToNextStep}
           className="w-full"
-          disabled={!canProceed}
+          disabled={!canProceed && currentStep !== 'visaFiles'}
         >
-          {t('continue')}
+          {t(currentStep === 'visaFiles' ? 'skip' : 'continue')}
         </Button>
       </div>
     </div>

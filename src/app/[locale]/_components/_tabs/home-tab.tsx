@@ -4,9 +4,17 @@ import { Button } from "@/components/ui/button";
 import { ROUTES_PATH } from "@/constants/routes";
 import { useNavigate } from "@/hooks/use-navigate";
 import { LOCAL_STORAGE_KEYS } from "@/constants/local-storage";
+import { useEffect, useState } from "react";
 
 export function HomeTab() {
-  const hasSavedApplication = Boolean(localStorage.getItem(LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE));
+  const [hasSavedApplication, setHasSavedApplication] = useState(false);
+  
+  useEffect(() => {
+    // Проверяем localStorage только на стороне клиента
+    setHasSavedApplication(
+      Boolean(localStorage.getItem(LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE))
+    );
+  }, []);
 
   const openVisaApplication = useNavigate(ROUTES_PATH.VISA_APPLICATION);
 

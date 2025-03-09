@@ -8,6 +8,7 @@ import * as R from 'ramda'
 import { useTranslations } from 'next-intl';
 import { VisaTypeCard } from './visa-type-card';
 import { useVisaStep } from '../../_providers/visa-step-provider';
+import { VisaStepContainer } from '../../_components/visa-step-container';
 
 export function VisaTypeStep() {
   const visaRequirement = useGetVisaRequirement() 
@@ -24,7 +25,7 @@ export function VisaTypeStep() {
   const selectedVisas = watch('selectedVisas') || [];
 
   return (
-    <div className="space-y-4">
+    <VisaStepContainer>
       <VisaRoute />
       <VisaResultInfo />
       <H1>{isVisaFree ? t('selectAdditionalServices') : t('selectOption')} {selectedVisas.length > 0 && `(${selectedVisas.length})`}</H1>
@@ -50,6 +51,6 @@ export function VisaTypeStep() {
           />
         ))}
       </div>
-    </div>
+    </VisaStepContainer>
   );
 } 

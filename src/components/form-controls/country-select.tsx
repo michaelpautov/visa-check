@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react";
 import { countries } from 'countries-list';
-import * as CountryFlags from 'country-flag-icons/react/3x2';
 import { useTranslations } from 'next-intl';
 import {
   Popover,

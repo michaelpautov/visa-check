@@ -5,6 +5,7 @@ import { VisaTypeStep } from "../_components-steps/visa-type-step";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { VisaArrivalDatesStep } from "../_components-steps/visa-arrival-dates-step";
+import { VisaFilesStep } from "../_components-steps/visa-files-step";
 
 function StepContent() {
   const { currentStep, steps } = useVisaStep();
@@ -55,6 +56,8 @@ function StepContent() {
               return <VisaTypeStep />;
             case 'visaArrivalDates':
               return <VisaArrivalDatesStep />;
+            case 'visaFiles':
+              return <VisaFilesStep />;
             default:
               return null;
           }
