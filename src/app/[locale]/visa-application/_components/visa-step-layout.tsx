@@ -39,7 +39,7 @@ export function VisaStepLayout({ children }: StepLayoutProps) {
         <Progress value={((steps.indexOf(currentStep) + 1) / steps.length) * 100} />
       </div>
 
-      <main className="flex-1 overflow-hidden mx-4">
+      <main className="flex-1 overflow-auto mx-4">
         {children}
       </main>
 
