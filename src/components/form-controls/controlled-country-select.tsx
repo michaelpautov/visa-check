@@ -10,6 +10,7 @@ interface ControlledCountrySelectProps<T extends FieldValues> {
   searchPlaceholder?: string;
   label?: string;
   rules?: Record<string, unknown>;
+  disabled?: boolean;
 }
 
 export function ControlledCountrySelect<T extends FieldValues>({
@@ -18,7 +19,8 @@ export function ControlledCountrySelect<T extends FieldValues>({
   placeholder,
   searchPlaceholder,
   label,
-  rules
+  rules,
+  disabled = false
 }: ControlledCountrySelectProps<T>) {
   return (
     <Controller
@@ -32,6 +34,7 @@ export function ControlledCountrySelect<T extends FieldValues>({
             onChange={field.onChange}
             placeholder={placeholder}
             searchPlaceholder={searchPlaceholder}
+            disabled={disabled}
           />
         </FormControl>
       )}
