@@ -102,6 +102,13 @@
         "lastName": "Last Name",
         "dateOfBirth": "Date of Birth"
       },
+      "visaPassportInformationStep": {
+        "title": "Passport Information",
+        "passportCountry": "Passport Country",
+        "passportNumber": "Passport Number",
+        "passportExpirationDate": "Passport Expiration Date",
+        "bornCountry": "Country of Birth"
+      },
       "expectDeliveryDate": {
         "text": "Expected delivery date: Tomorrow by 16:02"
       },

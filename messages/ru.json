@@ -102,6 +102,13 @@
         "lastName": "Фамилия",
         "dateOfBirth": "Дата рождения"
       },
+      "visaPassportInformationStep": {
+        "title": "Информация о паспорте",
+        "passportCountry": "Страна паспорта",
+        "passportNumber": "Номер паспорта",
+        "passportExpirationDate": "Дата окончания срока действия паспорта",
+        "bornCountry": "Страна рождения"
+      },
       "expectDeliveryDate": {
         "text": "Ожидаемая дата доставки: Завтра до 16:02"
       },

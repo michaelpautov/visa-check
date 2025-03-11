@@ -7,7 +7,7 @@ import { ControlledDatePicker } from "@/components/form-controls/controlled-date
 import { useTranslations } from "next-intl";
 
 export function VisaPersonalDataStep() {
-  const {forms: {visaPersonalData}} = useVisaStep()
+  const {forms: {  visaPersonalData }} = useVisaStep()
   const t = useTranslations("components.visaPersonalDataStep");
 
   return (

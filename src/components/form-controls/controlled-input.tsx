@@ -32,12 +32,13 @@ export function ControlledInput<T extends FieldValues>({
       render={({ field, fieldState: { error } }) => (
         <FormControl label={label} error={error}>
           <Input
+            {...field}
             id={name}
             type={type}
             placeholder={placeholder}
             disabled={disabled}
             className={className}
-            {...field}
+            value={field.value ?? ''}
           />
         </FormControl>
       )}
