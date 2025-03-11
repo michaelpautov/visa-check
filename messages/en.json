@@ -6,6 +6,13 @@
       "saveAndExit": "Save and exit",
       "skip": "Skip for now"
     },
+    "homePage": {
+      "title": "Welcome!",
+      "heading": "Focus on the journey, not the paperwork",
+      "subheading": "Get your visas stress-free with iVisa",
+      "continueOrder": "Continue with order",
+      "startNewApplication": "Start new application"
+    },
     "components": {
       "header": {
         "title": "Bali Visa",

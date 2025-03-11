@@ -5,8 +5,10 @@ import { ROUTES_PATH } from "@/constants/routes";
 import { useNavigate } from "@/hooks/use-navigate";
 import { LOCAL_STORAGE_KEYS } from "@/constants/local-storage";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export function HomeTab() {
+  const t = useTranslations('homePage');
   const [hasSavedApplication, setHasSavedApplication] = useState(false);
   
   useEffect(() => {
@@ -34,11 +36,11 @@ export function HomeTab() {
       <div className="flex flex-col text-center flex-1">
         <div className="space-y-6">
           <H1>
-            Сосредоточьтесь на путешествии, не на бумагах
+            {t('heading')}
           </H1>
           
           <Lead className="text-muted-foreground">
-            Получите ваши визы без стресса с iVisa
+            {t('subheading')}
           </Lead>
         </div>
 
@@ -50,7 +52,7 @@ export function HomeTab() {
               size="lg" 
               className="w-full"
             >
-              Продолжить с заказом
+              {t('continueOrder')}
             </Button>
           )}
           <Button 
@@ -59,7 +61,7 @@ export function HomeTab() {
             size="lg" 
             className="w-full"
           >
-            Начать новое заявление
+            {t('startNewApplication')}
           </Button>
         </div>
 
