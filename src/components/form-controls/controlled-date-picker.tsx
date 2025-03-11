@@ -1,15 +1,16 @@
 'use client'
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import { DatePicker } from "./date-picker";
+import { DatePicker, DatePickerProps } from "./date-picker";
 import { FormControl } from "./form-control";
 
-interface ControlledDatePickerProps<T extends FieldValues> {
+type ControlledDatePickerProps<T extends FieldValues> = DatePickerProps & {
   name: Path<T>;
   control: Control<T>;
   rules?: Record<string, unknown>;
   className?: string;
   placeholder?: string;
   label?: string;
+  min?: Date;
 }
 
 export function ControlledDatePicker<T extends FieldValues>({
@@ -18,7 +19,8 @@ export function ControlledDatePicker<T extends FieldValues>({
   rules,
   className,
   placeholder,
-  label
+  label,
+  ...props
 }: ControlledDatePickerProps<T>) {
   return (
     <Controller
@@ -28,11 +30,12 @@ export function ControlledDatePicker<T extends FieldValues>({
       render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
         <FormControl label={label} error={error}>
           <DatePicker
+            {...field}
+            {...props}
             value={value as Date}
             onChange={onChange}
             className={className}
             placeholder={placeholder}
-            {...field}
           />
         </FormControl>
       )}

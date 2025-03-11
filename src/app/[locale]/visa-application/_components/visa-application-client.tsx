@@ -4,7 +4,7 @@ import { VisaTripPlanStep } from "../_components-steps/visa-trip-plan-step";
 import { VisaTypeStep } from "../_components-steps/visa-type-step";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { VisaArrivalDatesStep } from "../_components-steps/visa-arrival-dates-step";
+import { VisaTripDetailsStep } from "../_components-steps/visa-trip-details-step";
 import { VisaFilesStep } from "../_components-steps/visa-files-step";
 import { VisaPersonalDataStep } from "../_components-steps/visa-personal-data-step";
 import { VisaPassportInformationStep } from "../_components-steps/visa-passport-information-step";
@@ -58,7 +58,7 @@ function StepContent() {
             case 'visaType':
               return <VisaTypeStep />;
             case 'visaArrivalDates':
-              return <VisaArrivalDatesStep />;
+              return <VisaTripDetailsStep />;
             case 'visaFiles':
               return <VisaFilesStep />;
             case 'visaPersonalData':

@@ -5,7 +5,7 @@ import { format } from "date-fns"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { Calendar, CalendarProps } from "@/components/ui/calendar"
 import {
   Popover,
   PopoverContent,
@@ -13,14 +13,14 @@ import {
 } from "@/components/ui/popover"
 import { FiCalendar } from "react-icons/fi";
 
-interface DatePickerProps {
+export type DatePickerProps = CalendarProps & {
   value?: Date
   onChange?: (date: Date | undefined) => void
   className?: string
   placeholder?: string
 }
 
-export function DatePicker({ value, onChange, className, placeholder }: DatePickerProps) {
+export function DatePicker({ value, onChange, className, placeholder, ...props }: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -38,6 +38,7 @@ export function DatePicker({ value, onChange, className, placeholder }: DatePick
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
+          {...props}
           mode="single"
           selected={value}
           onSelect={onChange}
