@@ -57,6 +57,7 @@ export function ControlledFileInput<T extends FieldValues>({
         render={({ field: { onChange, ...field }, fieldState: { error } }) => (
           <FormControl label={label} error={error}>
             <Input
+              {...field}
               type="file"
               onChange={(e) => {
                 const file = e.target.files?.[0];
@@ -64,7 +65,6 @@ export function ControlledFileInput<T extends FieldValues>({
                 handleFileChange(file);
               }}
               accept={accept}
-              {...field}
               value={undefined}
             />
           </FormControl>

@@ -9,6 +9,7 @@ import { VisaFilesStep } from "../_components-steps/visa-files-step";
 import { VisaPersonalDataStep } from "../_components-steps/visa-personal-data-step";
 import { VisaPassportInformationStep } from "../_components-steps/visa-passport-information-step";
 import { VisaOrderStep } from "../_components-steps/visa-order-step";
+import { VisaPaymentStep } from "../_components-steps/visa-payment-step";
 
 function StepContent() {
   const { currentStep, steps } = useVisaStep();
@@ -67,6 +68,8 @@ function StepContent() {
               return <VisaPassportInformationStep />;
             case 'visaOrder':
               return <VisaOrderStep />;
+            case 'visaPayment':
+              return <VisaPaymentStep />;
             default:
               return null;
           }

@@ -113,7 +113,18 @@
         "text": "Ожидаемая дата доставки: Завтра до 16:02"
       },
       "visaOrderStep": {
-        "title": "Обзор Заказа"
+        "title": "Обзор Заказа",
+        "agreed": "Я согласен с условиями и правилами"
+      },
+      "controlledPaymentMethod": {
+        "label": "Способ оплаты",
+        "placeholder": "Выберите способ оплаты"
+      },
+      "visaPaymentStep": {
+        "title": "Оплата",
+        "paymentMethod": "Способ оплаты",
+        "paymentInfo": "Отправьте платеж на следующие реквизиты",
+        "paymentProof": "Скриншот платежа"
       }
     }
   }

@@ -1,7 +1,7 @@
 import { useVisaStep } from "../_providers/visa-step-provider";
 import { IoIosAirplane } from "react-icons/io";
 import { useTranslations } from "next-intl";
-import { SquareFlag } from "@/components/square-flag";
+import { SquareFlag } from "@/components/common/square-flag";
 
 export default function VisaRoute() {
   const { forms: { passportCountry } } = useVisaStep();

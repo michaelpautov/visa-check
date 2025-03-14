@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import VisaSkeleton from '../_components/visa-skeleton';
 import { LOCAL_STORAGE_KEYS } from '@/constants/local-storage';
 
-export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates' | 'visaFiles' | 'visaPersonalData' | 'visaPassportInformation' | 'visaOrder';
+export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates' | 'visaFiles' | 'visaPersonalData' | 'visaPassportInformation' | 'visaOrder' | 'visaPayment';
 
 export const passportCountrySchema = z.object({
   passportCountry: z.object({
@@ -66,8 +66,12 @@ export const visaPassportInformationSchema = z.object({
 });
 
 export const visaOrderSchema = z.object({
-  agreed: z.boolean().optional(),
-  // Add other fields as needed for the order step
+  agreed: z.literal(true),
+});
+
+export const visaPaymentSchema = z.object({
+  paymentMethod: z.string(),
+  paymentProof: z.instanceof(File),
 });
 
 // Combined schema for the entire form
@@ -79,6 +83,7 @@ export const formSchema = z.object({
   visaPersonalData: visaPersonalDataSchema,
   visaPassportInformation: visaPassportInformationSchema,
   visaOrder: visaOrderSchema,
+  visaPayment: visaPaymentSchema,
 });
 
 // TypeScript types from Zod schemas
@@ -89,6 +94,7 @@ export type VisaFiles = z.infer<typeof visaFilesSchema>;
 export type VisaPersonalData = z.infer<typeof visaPersonalDataSchema>;
 export type VisaPassportInformation = z.infer<typeof visaPassportInformationSchema>;
 export type VisaOrder = z.infer<typeof visaOrderSchema>;
+export type VisaPayment = z.infer<typeof visaPaymentSchema>;
 export type FormData = z.infer<typeof formSchema>;
 
 // Type for the forms map
@@ -100,6 +106,7 @@ type StepForms = {
   visaPersonalData: UseFormReturn<VisaPersonalData>;
   visaPassportInformation: UseFormReturn<VisaPassportInformation>;
   visaOrder: UseFormReturn<VisaOrder>;
+  visaPayment: UseFormReturn<VisaPayment>;
 };
 
 interface StepContextType {
@@ -119,7 +126,7 @@ interface StepContextType {
 
 const StepContext = createContext<StepContextType | undefined>(undefined);
 
-const STEPS: Step[] = ['passportCountry', 'visaType', 'visaArrivalDates', 'visaFiles', 'visaPersonalData', 'visaPassportInformation', 'visaOrder'];
+const STEPS: Step[] = ['passportCountry', 'visaType', 'visaArrivalDates', 'visaFiles', 'visaPersonalData', 'visaPassportInformation', 'visaOrder', 'visaPayment'];
 const STORAGE_KEY = LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE;
 
 interface StoredState {
@@ -217,6 +224,12 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     defaultValues: formData.visaOrder,
   });
 
+  const visaPaymentForm = useForm<VisaPayment>({
+    resolver: zodResolver(visaPaymentSchema),
+    mode: 'onChange',
+    defaultValues: formData.visaPayment,
+  });
+
   // Update forms when formData changes from localStorage
   useEffect(() => {
     if (formData) {
@@ -241,6 +254,9 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
       if (formData.visaOrder) {
         visaOrderForm.reset(formData.visaOrder);
       }
+      if (formData.visaPayment) {
+        visaPaymentForm.reset(formData.visaPayment);
+      }
     }
     setTimeout(() => {
       setIsLoading(false);
@@ -255,6 +271,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     visaPersonalData: visaPersonalDataForm,
     visaPassportInformation: visaPassportInformationForm,
     visaOrder: visaOrderForm,
+    visaPayment: visaPaymentForm,
   };
 
   // Save state to localStorage whenever it changes

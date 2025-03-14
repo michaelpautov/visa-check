@@ -1,4 +1,4 @@
-import { SquareFlag } from "@/components/square-flag";
+import { SquareFlag } from "@/components/common/square-flag";
 import { useVisaStep } from "../_providers/visa-step-provider";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useTranslations } from "next-intl";

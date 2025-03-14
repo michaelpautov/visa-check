@@ -113,7 +113,18 @@
         "text": "Expected delivery date: Tomorrow by 16:02"
       },
       "visaOrderStep": {
-        "title": "Order Overview"
+        "title": "Order Overview",
+        "agreed": "I agree to the terms and conditions"
+      },
+      "controlledPaymentMethod": {
+        "label": "Payment Method",
+        "placeholder": "Select payment method"
+      },
+      "visaPaymentStep": {
+        "title": "Payment",
+        "paymentMethod": "Payment Method",
+        "paymentInfo": "Send the payment to the following details",
+        "paymentProof": "Payment Proof"
       }
     }
 }

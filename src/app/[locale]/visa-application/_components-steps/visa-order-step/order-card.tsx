@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Small } from "@/components/ui/typography";
 import { useVisaStep } from "../../_providers/visa-step-provider";
 import { useTranslations } from "next-intl";
-import { SquareFlag } from "@/components/square-flag";
+import { SquareFlag } from "@/components/common/square-flag";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export function OrderCard() {
