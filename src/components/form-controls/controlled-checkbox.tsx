@@ -28,8 +28,8 @@ export function ControlledCheckbox<T extends FieldValues>({
       name={name}
       control={control}
       rules={rules}
-      render={({ field: { value, onChange, ...field }, fieldState: { error } }) => (
-        <FormControl error={error}>
+      render={({ field: { value, onChange, ...field }, fieldState: { error, isTouched } }) => (
+        <FormControl error={isTouched ? error : undefined}>
           <div className="flex items-start space-x-2">
             <Checkbox
               {...field}
