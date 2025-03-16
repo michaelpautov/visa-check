@@ -3,7 +3,7 @@
 import { H1 } from '@/components/ui/typography';
 import VisaRoute from '../../_components/visa-route';
 import { VisaResultInfo } from './visa-result-info';
-import { useGetVisaRequirement } from '../../hooks/get-visa-requirement';
+import { useGetVisaRequirement } from '../../_hooks/get-visa-requirement';
 import * as R from 'ramda'
 import { useTranslations } from 'next-intl';
 import { VisaTypeCard } from './visa-type-card';

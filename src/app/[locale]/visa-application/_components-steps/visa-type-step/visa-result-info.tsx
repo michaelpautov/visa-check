@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { useGetVisaRequirement } from "../../hooks/get-visa-requirement";
+import { useGetVisaRequirement } from "../../_hooks/get-visa-requirement";
 import * as R from 'ramda'
 import { useTranslations } from 'next-intl';
 

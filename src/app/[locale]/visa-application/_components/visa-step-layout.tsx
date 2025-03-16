@@ -6,13 +6,14 @@ import { Button } from '@/components/ui/button';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { useTranslations } from 'next-intl';
 import { useNavigateBack } from '@/hooks/use-navigate-back';
+import { VisaStepLayoutButton } from './visa-step-layout-button';
 
 interface StepLayoutProps {
   children: ReactNode;
 }
 
 export function VisaStepLayout({ children }: StepLayoutProps) {
-  const { currentStep, steps, goToNextStep, goToPreviousStep, canProceed, cleanState, cleanCurrentStep } = useVisaStep();
+  const { currentStep, steps, goToPreviousStep, cleanState, cleanCurrentStep } = useVisaStep();
   const t = useTranslations('common');
 
   const navigateBack = useNavigateBack()
@@ -44,13 +45,7 @@ export function VisaStepLayout({ children }: StepLayoutProps) {
       </main>
 
       <div className="flex-none p-4 bg-background">
-        <Button
-          onClick={goToNextStep}
-          className="w-full"
-          disabled={!canProceed && currentStep !== 'visaFiles'}
-        >
-          {t(currentStep === 'visaFiles' ? 'skip' : 'continue')}
-        </Button>
+        <VisaStepLayoutButton />
       </div>
     </div>
   );

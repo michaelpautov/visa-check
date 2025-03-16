@@ -18,6 +18,7 @@ export function VisaPersonalDataStep() {
       <ControlledInput name="firstName" control={visaPersonalData.control} label={t("firstName")} />
       <ControlledInput name="lastName" control={visaPersonalData.control} label={t("lastName")} />
       <ControlledDatePicker name="dateOfBirth" control={visaPersonalData.control} label={t("dateOfBirth")} />
+      <ControlledInput name="email" control={visaPersonalData.control} label={t("email")} />  
     </VisaStepContainer>
   );
 }

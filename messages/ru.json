@@ -100,7 +100,8 @@
         "subtitle": "Они должны совпадать с данными в паспорте",
         "firstName": "Имя",
         "lastName": "Фамилия",
-        "dateOfBirth": "Дата рождения"
+        "dateOfBirth": "Дата рождения",
+        "email": "Email"
       },
       "visaPassportInformationStep": {
         "title": "Информация о паспорте",
@@ -125,6 +126,11 @@
         "paymentMethod": "Способ оплаты",
         "paymentInfo": "Отправьте платеж на следующие реквизиты",
         "paymentProof": "Скриншот платежа"
+      },
+      "visaStepLayoutButton": {
+        "sendEmail": "Отправить email",
+        "sending": "Отправка...",
+        "sent": "Отправлено"
       }
     }
   }

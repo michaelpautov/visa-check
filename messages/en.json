@@ -100,7 +100,8 @@
         "subtitle": "They should match your passport data",
         "firstName": "First Name",
         "lastName": "Last Name",
-        "dateOfBirth": "Date of Birth"
+        "dateOfBirth": "Date of Birth",
+        "email": "Email"
       },
       "visaPassportInformationStep": {
         "title": "Passport Information",
@@ -125,6 +126,11 @@
         "paymentMethod": "Payment Method",
         "paymentInfo": "Send the payment to the following details",
         "paymentProof": "Payment Proof"
+      },
+      "visaStepLayoutButton": {
+        "sendEmail": "Send email",
+        "sending": "Sending...",
+        "sent": "Sent"
       }
     }
 }

@@ -17,6 +17,7 @@ export function VisaPaymentStep() {
   const watchPaymentMethod = visaPayment.watch('paymentMethod');
   const paymentMethod = watchPaymentMethod as 'permata' | 'USDT_TRC20';
 
+
   return (
     <VisaStepContainer>
       <H1>{t('title')}</H1>
@@ -36,6 +37,7 @@ export function VisaPaymentStep() {
           name="paymentProof"
           control={visaPayment.control}
           label={t('paymentProof')}
+          accept="image/*,application/pdf"
         />
       )}
     </VisaStepContainer>

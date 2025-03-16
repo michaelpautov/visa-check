@@ -5,74 +5,16 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import VisaSkeleton from '../_components/visa-skeleton';
 import { LOCAL_STORAGE_KEYS } from '@/constants/local-storage';
+import { VisaFiles, visaFilesSchema } from '../_components-steps/visa-files-step/schema';
+import { PassportCountry, passportCountrySchema } from '../_components-steps/visa-trip-details-step/schema';
+import { VisaType, visaTypeSchema } from '../_components-steps/visa-type-step/schema';
+import { VisaArrivalDates, visaArrivalDatesSchema } from '../_components-steps/visa-trip-plan-step/schema';
+import { VisaPersonalData, visaPersonalDataSchema } from '../_components-steps/visa-personal-data-step/schema';
+import { VisaPassportInformation, visaPassportInformationSchema } from '../_components-steps/visa-passport-information-step/schema';
+import { VisaOrder, visaOrderSchema } from '../_components-steps/visa-order-step/schema';
+import { VisaPayment, visaPaymentSchema } from '../_components-steps/visa-payment-step/schema';
 
 export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates' | 'visaFiles' | 'visaPersonalData' | 'visaPassportInformation' | 'visaOrder' | 'visaPayment';
-
-export const passportCountrySchema = z.object({
-  passportCountry: z.object({
-    code: z.string(),
-    name: z.string(),
-    native: z.string(),
-  }),
-  flyToCountry: z.object({
-    code: z.string(),
-    name: z.string(),
-    native: z.string(),
-  }),
-});
-
-export const visaTypeSchema = z.object({
-  selectedVisas: z.array(z.object({
-    days: z.number(),
-    price: z.number(),
-    extendable: z.boolean(),
-    maxExtensions: z.number(),
-    maxTotalDays: z.number(),
-    type: z.string().optional(),
-    shortName: z.string().optional(),
-    officialName: z.string().optional(),
-    requirements: z.array(z.string()).optional()
-  }))
-});
-
-export const visaArrivalDatesSchema = z.object({
-  arrivalDate: z.date().optional(),
-  departureDate: z.date().optional(),
-});
-
-export const visaFilesSchema = z.object({
-  visaFiles: z.array(z.string()),
-});
-
-export const visaPersonalDataSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  dateOfBirth: z.date(),
-});
-
-export const visaPassportInformationSchema = z.object({
-  passportCountry: z.object({
-    code: z.string(),
-    name: z.string(),
-    native: z.string(),
-  }),
-  bornCountry: z.object({
-    code: z.string(),
-    name: z.string(),
-    native: z.string(),
-  }),
-  passportNumber: z.string().optional(),
-  passportExpirationDate: z.date().optional(),
-});
-
-export const visaOrderSchema = z.object({
-  agreed: z.literal(true),
-});
-
-export const visaPaymentSchema = z.object({
-  paymentMethod: z.string(),
-  paymentProof: z.instanceof(File),
-});
 
 // Combined schema for the entire form
 export const formSchema = z.object({
@@ -87,19 +29,11 @@ export const formSchema = z.object({
 });
 
 // TypeScript types from Zod schemas
-export type PasportCountry = z.infer<typeof passportCountrySchema>;
-export type VisaType = z.infer<typeof visaTypeSchema>;
-export type VisaArrivalDates = z.infer<typeof visaArrivalDatesSchema>;
-export type VisaFiles = z.infer<typeof visaFilesSchema>;
-export type VisaPersonalData = z.infer<typeof visaPersonalDataSchema>;
-export type VisaPassportInformation = z.infer<typeof visaPassportInformationSchema>;
-export type VisaOrder = z.infer<typeof visaOrderSchema>;
-export type VisaPayment = z.infer<typeof visaPaymentSchema>;
 export type FormData = z.infer<typeof formSchema>;
 
 // Type for the forms map
 type StepForms = {
-  passportCountry: UseFormReturn<PasportCountry>;
+  passportCountry: UseFormReturn<PassportCountry>;
   visaType: UseFormReturn<VisaType>;
   visaArrivalDates: UseFormReturn<VisaArrivalDates>;
   visaFiles: UseFormReturn<VisaFiles>;
@@ -182,7 +116,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const passportCountryForm = useForm<PasportCountry>({
+  const passportCountryForm = useForm<PassportCountry>({
     resolver: zodResolver(passportCountrySchema),
     mode: 'onChange',
     defaultValues: formData.passportCountry,
