@@ -25,6 +25,7 @@ export function useSendEmail(): UseSendEmailReturn {
       const paymentProof = forms.visaPayment.getValues('paymentProof') as File | undefined;
       const paymentMethod = forms.visaPayment.getValues('paymentMethod');
       const email = forms.visaPersonalData.getValues('email');
+      const passport = forms.visaFiles.getValues('passport') as File | undefined;
       
       if (!personalData || !passportInfo) {
         toast.error('Missing personal data');
@@ -33,6 +34,25 @@ export function useSendEmail(): UseSendEmailReturn {
       
       if (!paymentProof) {
         toast.error('Payment proof is required');
+        return;
+      }
+      
+      // Ensure payment proof is a valid File object
+      if (!(paymentProof instanceof File) || typeof paymentProof.arrayBuffer !== 'function') {
+        toast.error('Invalid payment proof file format');
+        console.error('Payment proof is not a valid File object:', paymentProof);
+        return;
+      }
+
+      if (!passport) {
+        toast.error('Passport is required');
+        return;
+      }
+      
+      // Ensure passport is a valid File object
+      if (!(passport instanceof File) || typeof passport.arrayBuffer !== 'function') {
+        toast.error('Invalid passport file format');
+        console.error('Passport is not a valid File object:', passport);
         return;
       }
       
@@ -57,7 +77,8 @@ Passport Information:
 
 Payment Information:
 - Method: ${paymentMethod}
-- File: ${paymentProof.name} (${(paymentProof.size / 1024).toFixed(2)} KB)
+- Payment Proof: ${paymentProof.name} (${(paymentProof.size / 1024).toFixed(2)} KB)
+- Passport: ${passport.name} (${(passport.size / 1024).toFixed(2)} KB)
       `;
       
       // Create FormData to send file
@@ -66,8 +87,8 @@ Payment Information:
       emailFormData.append('email', email);
       emailFormData.append('subject', 'New Visa Application');
       emailFormData.append('message', message);
-      emailFormData.append('file', paymentProof);
-      
+      emailFormData.append('paymentProof', paymentProof);
+      emailFormData.append('passport', passport);
       // Send email with attachment
       console.log('Sending request to API...');
       const response = await fetch('/api/send-email', {

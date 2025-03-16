@@ -5,9 +5,12 @@ import { BiTime } from "react-icons/bi";
 import { MdSecurity } from "react-icons/md";
 import { FaUserShield } from "react-icons/fa";
 import { IconTextItem } from "./icon-text-item";
+import { ControlledFileInput } from "@/components/form-controls/controlled-file-input";
+import { useVisaStep } from "../../_providers/visa-step-provider";
 
 export function VisaFilesStep() {
   const t = useTranslations("components.visaFilesStep");
+  const { forms: { visaFiles } } = useVisaStep();
 
   return (
     <VisaStepContainer>
@@ -29,6 +32,11 @@ export function VisaFilesStep() {
           text={t("dataOwnership")}
         />
       </div>
+      <ControlledFileInput
+        name="passport"
+        control={visaFiles.control}
+        label={t("passport")}
+      />
     </VisaStepContainer>
   );
 }

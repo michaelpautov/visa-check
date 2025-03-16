@@ -93,7 +93,8 @@
         "scanPassport": "Save time on filling out the application by scanning your passport.",
         "secureEncryption": "Your information is securely encrypted.",
         "dataOwnership": "Your data belongs to you, and no one can access it without your permission.",
-        "ifYouDontHaveIt": "If you don't have it, you can return to this step later."
+        "ifYouDontHaveIt": "If you don't have it, you can return to this step later.",
+        "passport": "Passport"
       },
       "visaPersonalDataStep": {
         "title": "Personal Data",

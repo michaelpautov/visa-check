@@ -23,6 +23,7 @@ export interface SendEmailParams {
   text?: string;
   html?: string;
   attachment?: EmailAttachment;
+  attachments?: EmailAttachment[];
   cc?: string | string[];
   bcc?: string | string[];
   replyTo?: string;
@@ -82,10 +83,10 @@ class SESEmailService {
    * Отправляет электронное письмо через AWS SES
    */
   async sendEmail(params: SendEmailParams): Promise<{ messageId: string }> {
-    const { to, subject, html, text, cc, bcc, replyTo, attachment } = params;
+    const { to, subject, html, text, cc, bcc, replyTo, attachment, attachments } = params;
     
-    // Если есть вложение, используем SendRawEmailCommand
-    if (attachment) {
+    // Если есть вложения, используем SendRawEmailCommand
+    if (attachment || attachments?.length) {
       return this.sendEmailWithAttachment(params);
     }
     
@@ -144,13 +145,27 @@ class SESEmailService {
    * Использует SendRawEmailCommand для поддержки вложений
    */
   private async sendEmailWithAttachment(params: SendEmailParams): Promise<{ messageId: string }> {
-    const { to, subject, html, text, cc, bcc, replyTo, attachment } = params;
+    const { to, subject, html, text, cc, bcc, replyTo, attachment, attachments } = params;
     
-    if (!attachment) {
-      return this.sendEmail({ ...params, attachment: undefined });
+    // If no attachments, use regular send
+    if (!attachment && (!attachments || attachments.length === 0)) {
+      return this.sendEmail({ ...params, attachment: undefined, attachments: undefined });
     }
 
     try {
+      // Prepare all attachments
+      const allAttachments: EmailAttachment[] = [];
+      
+      // Add single attachment if provided
+      if (attachment) {
+        allAttachments.push(attachment);
+      }
+      
+      // Add multiple attachments if provided
+      if (attachments && attachments.length > 0) {
+        allAttachments.push(...attachments);
+      }
+
       // Создаем MIME-сообщение
       const rawMessage = await createMimeMessage({
         from: this.config.fromEmail,
@@ -161,7 +176,7 @@ class SESEmailService {
         subject,
         html,
         text,
-        attachments: [attachment],
+        attachments: allAttachments,
       });
 
       // Отправляем сырое MIME-сообщение
@@ -190,7 +205,8 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
       to: params.to,
       from: EMAIL_CONFIG.from,
       subject: params.subject,
-      hasAttachment: !!params.attachment
+      hasAttachment: !!params.attachment,
+      attachmentsCount: params.attachments?.length || 0
     });
     
     // Отправляем письмо через SES

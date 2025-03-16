@@ -40,7 +40,7 @@ export function VisaTypeStep() {
                   shouldValidate: true
                 });
               } else {
-                setValue('selectedVisas', [...selectedVisas, duration], {
+                setValue('selectedVisas', [...selectedVisas, {...duration, day: duration.days}], {
                   shouldDirty: true,
                   shouldValidate: true
                 });

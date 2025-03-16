@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const visaFilesSchema = z.object({
-  visaFiles: z.array(z.string()),
+  passport: z.instanceof(File),
 });
 
 

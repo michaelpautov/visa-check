@@ -21,7 +21,7 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024;
 /**
  * Обрабатывает multipart/form-data запрос и извлекает данные формы и файл
  */
-async function processFormData(request: NextRequest): Promise<{ data: RequestData; fileData?: FileData }> {
+async function processFormData(request: NextRequest): Promise<{ data: RequestData; attachments: FileData[] }> {
   const formData = await request.formData();
   
   const data: RequestData = {
@@ -31,25 +31,43 @@ async function processFormData(request: NextRequest): Promise<{ data: RequestDat
     message: formData.get('message') as string,
   };
   
-  const file = formData.get('file') as File | null;
-  let fileData: FileData | undefined;
+  const paymentProof = formData.get('paymentProof') as File | null;
+  const passport = formData.get('passport') as File | null;
+  const attachments: FileData[] = [];
   
-  if (file) {
+  // Process payment proof file
+  if (paymentProof) {
     // Check file size
-    if (file.size > MAX_FILE_SIZE) {
-      throw new Error(`File is too large. Maximum size is ${MAX_FILE_SIZE / (1024 * 1024)}MB`);
+    if (paymentProof.size > MAX_FILE_SIZE) {
+      throw new Error(`Payment proof file is too large. Maximum size is ${MAX_FILE_SIZE / (1024 * 1024)}MB`);
     }
     
     // Convert file to buffer
-    const arrayBuffer = await file.arrayBuffer();
-    fileData = {
+    const arrayBuffer = await paymentProof.arrayBuffer();
+    attachments.push({
       buffer: Buffer.from(arrayBuffer),
-      name: file.name,
-      type: file.type,
-    };
+      name: paymentProof.name,
+      type: paymentProof.type,
+    });
   }
   
-  return { data, fileData };
+  // Process passport file
+  if (passport) {
+    // Check file size
+    if (passport.size > MAX_FILE_SIZE) {
+      throw new Error(`Passport file is too large. Maximum size is ${MAX_FILE_SIZE / (1024 * 1024)}MB`);
+    }
+    
+    // Convert file to buffer
+    const arrayBuffer = await passport.arrayBuffer();
+    attachments.push({
+      buffer: Buffer.from(arrayBuffer),
+      name: passport.name,
+      type: passport.type,
+    });
+  }
+  
+  return { data, attachments };
 }
 
 /**
@@ -64,7 +82,17 @@ function validateRequestData(data: RequestData): void {
 /**
  * Создает HTML и текстовое содержимое письма
  */
-function createEmailContent(data: RequestData, fileData?: FileData): { html: string; text: string } {
+function createEmailContent(data: RequestData, attachments: FileData[] = []): { html: string; text: string } {
+  const attachmentsHtml = attachments.length > 0 
+    ? `<p><strong>Приложения:</strong></p><ul>${attachments.map(file => 
+        `<li>${file.name} (${(file.buffer.length / 1024).toFixed(2)} KB)</li>`).join('')}</ul>` 
+    : '';
+  
+  const attachmentsText = attachments.length > 0 
+    ? `\nПриложения:\n${attachments.map(file => 
+        `- ${file.name} (${(file.buffer.length / 1024).toFixed(2)} KB)`).join('\n')}` 
+    : '';
+
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #333;">Новое сообщение с сайта</h2>
@@ -74,7 +102,7 @@ function createEmailContent(data: RequestData, fileData?: FileData): { html: str
       <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px;">
         ${data.message.replace(/\n/g, '<br>')}
       </div>
-      ${fileData ? `<p><strong>Приложение:</strong> ${fileData.name} (${(fileData.buffer.length / 1024).toFixed(2)} KB)</p>` : ''}
+      ${attachmentsHtml}
     </div>
   `;
 
@@ -84,7 +112,7 @@ function createEmailContent(data: RequestData, fileData?: FileData): { html: str
     Имя: ${data.name}
     Email: ${data.email}
     Сообщение: ${data.message}
-    ${fileData ? `Приложение: ${fileData.name} (${(fileData.buffer.length / 1024).toFixed(2)} KB)` : ''}
+    ${attachmentsText}
   `;
 
   return { html: htmlContent, text: textContent };
@@ -96,13 +124,13 @@ export async function POST(request: NextRequest) {
     const contentType = request.headers.get('content-type') || '';
     
     let data: RequestData;
-    let fileData: FileData | undefined;
+    let attachments: FileData[] = [];
     
     // Обрабатываем запрос в зависимости от типа
     if (contentType.includes('multipart/form-data')) {
       const result = await processFormData(request);
       data = result.data;
-      fileData = result.fileData;
+      attachments = result.attachments;
     } else {
       // Обрабатываем JSON запрос (для обратной совместимости)
       data = await request.json() as RequestData;
@@ -112,7 +140,7 @@ export async function POST(request: NextRequest) {
     validateRequestData(data);
 
     // Создаем содержимое письма
-    const { html, text } = createEmailContent(data, fileData);
+    const { html, text } = createEmailContent(data, attachments);
     
     // Отправляем письмо
     const result = await sendEmail({
@@ -120,11 +148,11 @@ export async function POST(request: NextRequest) {
       subject: data.subject || 'Новое сообщение с сайта',
       text,
       html,
-      attachment: fileData ? {
-        content: fileData.buffer,
-        filename: fileData.name,
-        contentType: fileData.type
-      } : undefined
+      attachments: attachments.length > 0 ? attachments.map(file => ({
+        content: file.buffer,
+        filename: file.name,
+        contentType: file.type
+      })) : undefined
     });
 
     if (result.success) {

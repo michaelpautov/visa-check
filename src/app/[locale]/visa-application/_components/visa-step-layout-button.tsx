@@ -20,7 +20,7 @@ export function VisaStepLayoutButton({ className = 'w-full' }: VisaStepLayoutBut
     if (isLoading) return tButton('sending');
     if (messageId) return tButton('sent');
     if (currentStep === 'visaPayment') return tButton('sendEmail');
-    return t(currentStep === 'visaFiles' ? 'skip' : 'continue');
+    return t('continue');
   }, [isLoading, messageId, currentStep, tButton, t]);
 
   const handleClick = () => {
@@ -35,7 +35,7 @@ export function VisaStepLayoutButton({ className = 'w-full' }: VisaStepLayoutBut
     <Button
       onClick={handleClick}
       className={className}
-      disabled={!canProceed && currentStep !== 'visaFiles'}
+      disabled={!canProceed}
     >
       {buttonText}
     </Button>
