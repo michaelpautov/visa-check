@@ -25,7 +25,7 @@ export function useSendEmail(): UseSendEmailReturn {
       const paymentProof = forms.visaPayment.getValues('paymentProof') as File | undefined;
       const paymentMethod = forms.visaPayment.getValues('paymentMethod');
       const email = forms.visaPersonalData.getValues('email');
-      const passport = forms.visaFiles.getValues('passport') as File | undefined;
+      const passport = forms.visaPassportUpload.getValues('passport') as File | undefined;
       
       if (!personalData || !passportInfo) {
         toast.error('Missing personal data');

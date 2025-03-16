@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import VisaSkeleton from '../_components/visa-skeleton';
 import { LOCAL_STORAGE_KEYS } from '@/constants/local-storage';
-import { VisaFiles, visaFilesSchema } from '../_components-steps/visa-files-step/schema';
+import { VisaPassportUpload, visaPassportUploadSchema } from '../_components-steps/visa-passport-upload-step/schema';
 import { PassportCountry, passportCountrySchema } from '../_components-steps/visa-trip-details-step/schema';
 import { VisaType, visaTypeSchema } from '../_components-steps/visa-type-step/schema';
 import { VisaArrivalDates, visaArrivalDatesSchema } from '../_components-steps/visa-trip-plan-step/schema';
@@ -13,15 +13,16 @@ import { VisaPersonalData, visaPersonalDataSchema } from '../_components-steps/v
 import { VisaPassportInformation, visaPassportInformationSchema } from '../_components-steps/visa-passport-information-step/schema';
 import { VisaOrder, visaOrderSchema } from '../_components-steps/visa-order-step/schema';
 import { VisaPayment, visaPaymentSchema } from '../_components-steps/visa-payment-step/schema';
+import { convertDatesToDateObjects } from '@/lib/date-utils';
 
-export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates' | 'visaFiles' | 'visaPersonalData' | 'visaPassportInformation' | 'visaOrder' | 'visaPayment';
+export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates' | 'visaPassportUpload' | 'visaPersonalData' | 'visaPassportInformation' | 'visaOrder' | 'visaPayment';
 
 // Combined schema for the entire form
 export const formSchema = z.object({
   passportCountry: passportCountrySchema,
   visaType: visaTypeSchema,
   visaArrivalDates: visaArrivalDatesSchema,
-  visaFiles: visaFilesSchema,
+  visaPassportUpload: visaPassportUploadSchema,
   visaPersonalData: visaPersonalDataSchema,
   visaPassportInformation: visaPassportInformationSchema,
   visaOrder: visaOrderSchema,
@@ -36,7 +37,7 @@ type StepForms = {
   passportCountry: UseFormReturn<PassportCountry>;
   visaType: UseFormReturn<VisaType>;
   visaArrivalDates: UseFormReturn<VisaArrivalDates>;
-  visaFiles: UseFormReturn<VisaFiles>;
+  visaPassportUpload: UseFormReturn<VisaPassportUpload>;
   visaPersonalData: UseFormReturn<VisaPersonalData>;
   visaPassportInformation: UseFormReturn<VisaPassportInformation>;
   visaOrder: UseFormReturn<VisaOrder>;
@@ -60,7 +61,7 @@ interface StepContextType {
 
 const StepContext = createContext<StepContextType | undefined>(undefined);
 
-const STEPS: Step[] = ['passportCountry', 'visaType', 'visaArrivalDates', 'visaFiles', 'visaPersonalData', 'visaPassportInformation', 'visaOrder', 'visaPayment'];
+const STEPS: Step[] = ['passportCountry', 'visaType', 'visaArrivalDates', 'visaPassportUpload', 'visaPersonalData', 'visaPassportInformation', 'visaOrder', 'visaPayment'];
 const STORAGE_KEY = LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE;
 
 interface StoredState {
@@ -84,7 +85,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     passportCountryForm.reset();
     visaTypeForm.reset();
     visaArrivalDatesForm.reset();
-    visaFilesForm.reset();
+    visaPassportUploadForm.reset();
     visaPersonalDataForm.reset();
     visaPassportInformationForm.reset();
     visaOrderForm.reset();
@@ -108,7 +109,9 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
       try {
         const { currentStep: savedStep, formData: savedFormData } = JSON.parse(saved) as StoredState;
         setCurrentStep(savedStep);
-        setFormData(savedFormData);
+        // Convert date strings to Date objects
+        const processedFormData = convertDatesToDateObjects(savedFormData);
+        setFormData(processedFormData as Partial<FormData>);
       } catch (error) {
         console.error('Error loading saved state:', error);
         localStorage.removeItem(STORAGE_KEY);
@@ -134,10 +137,10 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     defaultValues: formData.visaArrivalDates,
   });
 
-  const visaFilesForm = useForm<VisaFiles>({
-    resolver: zodResolver(visaFilesSchema),
+  const visaPassportUploadForm = useForm<VisaPassportUpload>({
+    resolver: zodResolver(visaPassportUploadSchema),
     mode: 'onChange',
-    defaultValues: formData.visaFiles || { visaFiles: [] },
+    defaultValues: formData.visaPassportUpload || { passport: undefined },
   });
 
   const visaPersonalDataForm = useForm<VisaPersonalData>({
@@ -176,8 +179,8 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
       if (formData.visaArrivalDates) {
         visaArrivalDatesForm.reset(formData.visaArrivalDates);
       }
-      if (formData.visaFiles) {
-        visaFilesForm.reset(formData.visaFiles);
+      if (formData.visaPassportUpload) {
+        visaPassportUploadForm.reset(formData.visaPassportUpload);
       }
       if (formData.visaPersonalData) {
         visaPersonalDataForm.reset(formData.visaPersonalData);
@@ -201,7 +204,7 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     passportCountry: passportCountryForm,
     visaType: visaTypeForm,
     visaArrivalDates: visaArrivalDatesForm,
-    visaFiles: visaFilesForm,
+    visaPassportUpload: visaPassportUploadForm,
     visaPersonalData: visaPersonalDataForm,
     visaPassportInformation: visaPassportInformationForm,
     visaOrder: visaOrderForm,

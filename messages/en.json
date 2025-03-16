@@ -88,8 +88,8 @@
         "arrivalDate": "When are you arriving in {country}?",
         "departureDate": "When are you leaving {country}?"
       },
-      "visaFilesStep": {
-        "title": "Let's upload your documents",
+      "visaPassportUploadStep": {
+        "title": "Let's upload your passport",
         "scanPassport": "Save time on filling out the application by scanning your passport.",
         "secureEncryption": "Your information is securely encrypted.",
         "dataOwnership": "Your data belongs to you, and no one can access it without your permission.",

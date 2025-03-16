@@ -5,7 +5,7 @@ import { VisaTypeStep } from "../_components-steps/visa-type-step";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { VisaTripDetailsStep } from "../_components-steps/visa-trip-details-step";
-import { VisaFilesStep } from "../_components-steps/visa-files-step";
+import { VisaPassportUploadStep } from "../_components-steps/visa-passport-upload-step";
 import { VisaPersonalDataStep } from "../_components-steps/visa-personal-data-step";
 import { VisaPassportInformationStep } from "../_components-steps/visa-passport-information-step";
 import { VisaOrderStep } from "../_components-steps/visa-order-step";
@@ -60,8 +60,8 @@ function StepContent() {
               return <VisaTypeStep />;
             case 'visaArrivalDates':
               return <VisaTripDetailsStep />;
-            case 'visaFiles':
-              return <VisaFilesStep />;
+            case 'visaPassportUpload':
+              return <VisaPassportUploadStep />;
             case 'visaPersonalData':
               return <VisaPersonalDataStep />;
             case 'visaPassportInformation':

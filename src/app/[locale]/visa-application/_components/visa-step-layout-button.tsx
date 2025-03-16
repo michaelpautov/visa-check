@@ -17,9 +17,11 @@ export function VisaStepLayoutButton({ className = 'w-full' }: VisaStepLayoutBut
   const { isLoading, messageId, sendEmail } = useSendEmail();
 
   const buttonText = useMemo(() => {
-    if (isLoading) return tButton('sending');
-    if (messageId) return tButton('sent');
-    if (currentStep === 'visaPayment') return tButton('sendEmail');
+    if (currentStep === 'visaPayment') {
+      if (isLoading) return tButton('sending');
+      if (messageId) return tButton('sent');
+      return tButton('sendEmail');
+    }
     return t('continue');
   }, [isLoading, messageId, currentStep, tButton, t]);
 
