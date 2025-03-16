@@ -17,15 +17,20 @@ export function VisaPaymentStep() {
   const watchPaymentMethod = visaPayment.watch('paymentMethod');
   const paymentMethod = watchPaymentMethod as 'permata' | 'USDT_TRC20';
 
-
   return (
     <VisaStepContainer>
       <H1>{t('title')}</H1>
       <VisaInfo />
+      <ControlledFileInput
+        name="passport"
+        control={visaPayment.control}
+        label={t('passport')}
+      />
       <ControlledPaymentMethod
         name="paymentMethod"
         control={visaPayment.control}
       />
+
       {paymentMethod && (
         <div className="flex flex-col gap-4">
           <Small>{t('paymentInfo')}</Small>

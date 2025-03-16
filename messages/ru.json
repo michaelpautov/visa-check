@@ -88,14 +88,6 @@
         "arrivalDate": "Когда вы прибываете в {country}?",
         "departureDate": "Когда вы уезжаете из {country}?"
       },
-      "visaPassportUploadStep": {
-        "title": "Давайте загрузим ваш паспорт",
-        "scanPassport": "Сэкономьте время на заполнении заявки, сканируя свой паспорт.",
-        "secureEncryption": "Ваша информация надежно зашифрована.",
-        "dataOwnership": "Ваши данные принадлежат вам, и никто не может получить к ним доступ без вашего разрешения.",
-        "ifYouDontHaveIt": "Если у вас его нет, вы можете вернуться к этому шагу позже.",
-        "passport": "Паспорт"
-      },
       "visaPersonalDataStep": {
         "title": "Персональные данные",
         "subtitle": "Они должны совпадать с данными в паспорте",
@@ -126,7 +118,8 @@
         "title": "Оплата",
         "paymentMethod": "Способ оплаты",
         "paymentInfo": "Отправьте платеж на следующие реквизиты",
-        "paymentProof": "Скриншот платежа"
+        "paymentProof": "Скриншот платежа",
+        "passport": "Паспорт"
       },
       "visaStepLayoutButton": {
         "sendEmail": "Отправить email",

@@ -20,14 +20,24 @@ export function useSendEmail(): UseSendEmailReturn {
       setIsLoading(true);
       setMessageId(null);
       
-      const personalData = formData.visaPersonalData;
-      const passportInfo = formData.visaPassportInformation;
+      // Get all form data
+      const { 
+        passportCountry, 
+        visaType, 
+        visaArrivalDates, 
+        visaPersonalData, 
+        visaPassportInformation, 
+        visaOrder
+      } = formData;
+      
+      // Get file uploads from the forms
       const paymentProof = forms.visaPayment.getValues('paymentProof') as File | undefined;
       const paymentMethod = forms.visaPayment.getValues('paymentMethod');
       const email = forms.visaPersonalData.getValues('email');
-      const passport = forms.visaPassportUpload.getValues('passport') as File | undefined;
+      const passport = forms.visaPayment.getValues('passport') as File | undefined;
       
-      if (!personalData || !passportInfo) {
+      // Validate required data
+      if (!visaPersonalData || !visaPassportInformation) {
         toast.error('Missing personal data');
         return;
       }
@@ -64,31 +74,57 @@ export function useSendEmail(): UseSendEmailReturn {
       
       console.log(`Sending email with file: ${paymentProof.name} (${paymentProof.size} bytes)`);
       
-      // Create message with visa application details
+      // Create a comprehensive message with all visa application details
       const message = `
 Visa Application Details:
 
+Passport Country:
+${passportCountry ? `- Passport Country: ${passportCountry.passportCountry.name}
+- Fly To Country: ${passportCountry.flyToCountry.name}` : '- Not provided'}
+
+Visa Type:
+${visaType && visaType.selectedVisas.length > 0 ? 
+  `- Selected Visas: ${visaType.selectedVisas.map(visa => 
+    visa.shortName || visa.type || `${visa.day} days visa`
+  ).join(', ')}` : '- Not provided'}
+
+Arrival Dates:
+${visaArrivalDates ? `- Arrival Date: ${visaArrivalDates.arrivalDate ? new Date(visaArrivalDates.arrivalDate).toLocaleDateString() : 'Not provided'}
+- Departure Date: ${visaArrivalDates.departureDate ? new Date(visaArrivalDates.departureDate).toLocaleDateString() : 'Not provided'}` : '- Not provided'}
+
 Personal Information:
-- Name: ${personalData.firstName} ${personalData.lastName}
+${visaPersonalData ? `- Name: ${visaPersonalData.firstName} ${visaPersonalData.lastName}
+- Email: ${visaPersonalData.email}
+- Date of Birth: ${visaPersonalData.dateOfBirth ? new Date(visaPersonalData.dateOfBirth).toLocaleDateString() : 'Not provided'}` : '- Not provided'}
 
 Passport Information:
-- Country: ${passportInfo.passportCountry.name}
-- Passport Number: ${passportInfo.passportNumber || 'Not provided'}
+${visaPassportInformation ? `- Passport Country: ${visaPassportInformation.passportCountry.name}
+- Born Country: ${visaPassportInformation.bornCountry.name}
+- Passport Number: ${visaPassportInformation.passportNumber || 'Not provided'}
+- Passport Expiration Date: ${visaPassportInformation.passportExpirationDate ? new Date(visaPassportInformation.passportExpirationDate).toLocaleDateString() : 'Not provided'}` : '- Not provided'}
+
+Order Information:
+${visaOrder ? `- Agreed to Terms: ${visaOrder.agreed ? 'Yes' : 'No'}` : '- Not provided'}
 
 Payment Information:
-- Method: ${paymentMethod}
+- Method: ${paymentMethod || 'Not provided'}
 - Payment Proof: ${paymentProof.name} (${(paymentProof.size / 1024).toFixed(2)} KB)
 - Passport: ${passport.name} (${(passport.size / 1024).toFixed(2)} KB)
       `;
       
-      // Create FormData to send file
+      // Create FormData to send file and all form data
       const emailFormData = new FormData();
-      emailFormData.append('name', `${personalData.firstName} ${personalData.lastName}`);
+      
+      // Add basic email information
+      emailFormData.append('name', visaPersonalData ? `${visaPersonalData.firstName} ${visaPersonalData.lastName}` : 'Visa Applicant');
       emailFormData.append('email', email);
       emailFormData.append('subject', 'New Visa Application');
       emailFormData.append('message', message);
+      
+      // Add files
       emailFormData.append('paymentProof', paymentProof);
       emailFormData.append('passport', passport);
+      
       // Send email with attachment
       console.log('Sending request to API...');
       const response = await fetch('/api/send-email', {

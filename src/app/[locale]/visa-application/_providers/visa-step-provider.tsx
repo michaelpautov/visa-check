@@ -5,7 +5,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import VisaSkeleton from '../_components/visa-skeleton';
 import { LOCAL_STORAGE_KEYS } from '@/constants/local-storage';
-import { VisaPassportUpload, visaPassportUploadSchema } from '../_components-steps/visa-passport-upload-step/schema';
 import { PassportCountry, passportCountrySchema } from '../_components-steps/visa-trip-details-step/schema';
 import { VisaType, visaTypeSchema } from '../_components-steps/visa-type-step/schema';
 import { VisaArrivalDates, visaArrivalDatesSchema } from '../_components-steps/visa-trip-plan-step/schema';
@@ -15,14 +14,13 @@ import { VisaOrder, visaOrderSchema } from '../_components-steps/visa-order-step
 import { VisaPayment, visaPaymentSchema } from '../_components-steps/visa-payment-step/schema';
 import { convertDatesToDateObjects } from '@/lib/date-utils';
 
-export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates' | 'visaPassportUpload' | 'visaPersonalData' | 'visaPassportInformation' | 'visaOrder' | 'visaPayment';
+export type Step = 'passportCountry' | 'visaType' | 'visaArrivalDates' | 'visaPersonalData' | 'visaPassportInformation' | 'visaOrder' | 'visaPayment';
 
 // Combined schema for the entire form
 export const formSchema = z.object({
   passportCountry: passportCountrySchema,
   visaType: visaTypeSchema,
   visaArrivalDates: visaArrivalDatesSchema,
-  visaPassportUpload: visaPassportUploadSchema,
   visaPersonalData: visaPersonalDataSchema,
   visaPassportInformation: visaPassportInformationSchema,
   visaOrder: visaOrderSchema,
@@ -37,7 +35,6 @@ type StepForms = {
   passportCountry: UseFormReturn<PassportCountry>;
   visaType: UseFormReturn<VisaType>;
   visaArrivalDates: UseFormReturn<VisaArrivalDates>;
-  visaPassportUpload: UseFormReturn<VisaPassportUpload>;
   visaPersonalData: UseFormReturn<VisaPersonalData>;
   visaPassportInformation: UseFormReturn<VisaPassportInformation>;
   visaOrder: UseFormReturn<VisaOrder>;
@@ -61,7 +58,7 @@ interface StepContextType {
 
 const StepContext = createContext<StepContextType | undefined>(undefined);
 
-const STEPS: Step[] = ['passportCountry', 'visaType', 'visaArrivalDates', 'visaPassportUpload', 'visaPersonalData', 'visaPassportInformation', 'visaOrder', 'visaPayment'];
+const STEPS: Step[] = ['passportCountry', 'visaType', 'visaArrivalDates', 'visaPersonalData', 'visaPassportInformation', 'visaOrder', 'visaPayment'];
 const STORAGE_KEY = LOCAL_STORAGE_KEYS.VISA_APPLICATION_STATE;
 
 interface StoredState {
@@ -85,7 +82,6 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     passportCountryForm.reset();
     visaTypeForm.reset();
     visaArrivalDatesForm.reset();
-    visaPassportUploadForm.reset();
     visaPersonalDataForm.reset();
     visaPassportInformationForm.reset();
     visaOrderForm.reset();
@@ -137,12 +133,6 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     defaultValues: formData.visaArrivalDates,
   });
 
-  const visaPassportUploadForm = useForm<VisaPassportUpload>({
-    resolver: zodResolver(visaPassportUploadSchema),
-    mode: 'onChange',
-    defaultValues: formData.visaPassportUpload || { passport: undefined },
-  });
-
   const visaPersonalDataForm = useForm<VisaPersonalData>({
     resolver: zodResolver(visaPersonalDataSchema),
     mode: 'onChange',
@@ -179,9 +169,6 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
       if (formData.visaArrivalDates) {
         visaArrivalDatesForm.reset(formData.visaArrivalDates);
       }
-      if (formData.visaPassportUpload) {
-        visaPassportUploadForm.reset(formData.visaPassportUpload);
-      }
       if (formData.visaPersonalData) {
         visaPersonalDataForm.reset(formData.visaPersonalData);
       }
@@ -204,7 +191,6 @@ export function VisaStepProvider({ children }: { children: ReactNode }) {
     passportCountry: passportCountryForm,
     visaType: visaTypeForm,
     visaArrivalDates: visaArrivalDatesForm,
-    visaPassportUpload: visaPassportUploadForm,
     visaPersonalData: visaPersonalDataForm,
     visaPassportInformation: visaPassportInformationForm,
     visaOrder: visaOrderForm,
