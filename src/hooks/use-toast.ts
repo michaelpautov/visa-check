@@ -2,6 +2,7 @@
 
 // Inspired by react-hot-toast library
 import * as React from "react"
+import { useCallback } from "react"
 
 import type {
   ToastActionElement,
@@ -191,4 +192,21 @@ function useToast() {
   }
 }
 
-export { useToast, toast }
+
+function useToastError() {
+  const { toast } = useToast();
+
+  return useCallback((title: string, description: string) => {
+    toast({ title, description, variant: 'destructive' });
+  }, [toast]);
+}
+
+function useToastSuccess() {
+  const { toast } = useToast();
+  
+  return useCallback((title: string, description: string) => {
+    toast({ title, description, variant: 'default' });
+  }, [toast]);
+}
+
+export { useToast, toast, useToastError, useToastSuccess }

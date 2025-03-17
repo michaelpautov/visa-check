@@ -7,6 +7,8 @@ interface RequestData {
   email: string;
   subject?: string;
   message: string;
+  html: string;
+  text: string;
 }
 
 interface FileData {
@@ -29,6 +31,8 @@ async function processFormData(request: NextRequest): Promise<{ data: RequestDat
     email: formData.get('email') as string,
     subject: formData.get('subject') as string,
     message: formData.get('message') as string,
+    html: formData.get('html') as string,
+    text: formData.get('text') as string,
   };
   
   const paymentProof = formData.get('paymentProof') as File | null;
@@ -74,48 +78,9 @@ async function processFormData(request: NextRequest): Promise<{ data: RequestDat
  * Валидирует данные запроса
  */
 function validateRequestData(data: RequestData): void {
-  if (!data.name || !data.email || !data.message) {
+  if (!data.name || !data.email || !data.message || !data.html || !data.text) {
     throw new Error('Missing required fields');
   }
-}
-
-/**
- * Создает HTML и текстовое содержимое письма
- */
-function createEmailContent(data: RequestData, attachments: FileData[] = []): { html: string; text: string } {
-  const attachmentsHtml = attachments.length > 0 
-    ? `<p><strong>Приложения:</strong></p><ul>${attachments.map(file => 
-        `<li>${file.name} (${(file.buffer.length / 1024).toFixed(2)} KB)</li>`).join('')}</ul>` 
-    : '';
-  
-  const attachmentsText = attachments.length > 0 
-    ? `\nПриложения:\n${attachments.map(file => 
-        `- ${file.name} (${(file.buffer.length / 1024).toFixed(2)} KB)`).join('\n')}` 
-    : '';
-
-  const htmlContent = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #333;">Новое сообщение с сайта</h2>
-      <p><strong>Имя:</strong> ${data.name}</p>
-      <p><strong>Email:</strong> ${data.email}</p>
-      <p><strong>Сообщение:</strong></p>
-      <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px;">
-        ${data.message.replace(/\n/g, '<br>')}
-      </div>
-      ${attachmentsHtml}
-    </div>
-  `;
-
-  const textContent = `
-    Новое сообщение с сайта
-    
-    Имя: ${data.name}
-    Email: ${data.email}
-    Сообщение: ${data.message}
-    ${attachmentsText}
-  `;
-
-  return { html: htmlContent, text: textContent };
 }
 
 export async function POST(request: NextRequest) {
@@ -133,21 +98,18 @@ export async function POST(request: NextRequest) {
       attachments = result.attachments;
     } else {
       // Обрабатываем JSON запрос (для обратной совместимости)
-      data = await request.json() as RequestData;
+      throw new Error('JSON requests are not supported. Please use multipart/form-data');
     }
     
     // Валидируем данные
     validateRequestData(data);
-
-    // Создаем содержимое письма
-    const { html, text } = createEmailContent(data, attachments);
     
     // Отправляем письмо
     const result = await sendEmail({
       to: 'michael.pautov.bali@gmail.com', // Отправляем на верифицированный email
       subject: data.subject || 'Новое сообщение с сайта',
-      text,
-      html,
+      text: data.text,
+      html: data.html,
       attachments: attachments.length > 0 ? attachments.map(file => ({
         content: file.buffer,
         filename: file.name,
