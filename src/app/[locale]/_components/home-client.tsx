@@ -3,6 +3,7 @@
 import { Tabs, TabsTrigger, TabsList, TabsContent } from "@/components/ui/tabs";
 import { FaHome, FaFile, FaUser } from "react-icons/fa";
 import { HomeTab } from "./_tabs/home-tab";
+import { ProfileTab } from "./_tabs/profile-tab";
 
 export function HomeClient() {
   const iconClassName = "text-2xl";
@@ -13,7 +14,7 @@ export function HomeClient() {
       <div className="flex-1 p-6">
         <TabsContent value="home" className="h-full"><HomeTab /></TabsContent>
         <TabsContent value="documents" className="h-full">Documents</TabsContent>
-        <TabsContent value="profile" className="h-full">Profile</TabsContent>
+        <TabsContent value="profile" className="h-full"><ProfileTab /></TabsContent>
       </div>
       <TabsList className="flex-none rounded-none bg-background w-full flex justify-between items-center p-6 h-auto ">
         <TabsTrigger 
