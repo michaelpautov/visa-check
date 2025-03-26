@@ -6,6 +6,24 @@
       "saveAndExit": "Save and exit",
       "skip": "Skip for now"
     },
+    "profile": {
+      "title": "Profile Settings",
+      "languageSettings": "Language Settings",
+      "language": "Language",
+      "selectLanguage": "Select language",
+      "currencySettings": "Currency Settings",
+      "currency": "Currency",
+      "selectCurrency": "Select currency",
+      "privacySettings": "Privacy Settings",
+      "privacyPolicy": "Privacy Policy",
+      "view": "View",
+      "notificationSettings": "Notification Settings",
+      "enableNotifications": "Enable notifications",
+      "accountSecurity": "Account Security",
+      "deleteAccount": "Delete Account",
+      "delete": "Delete",
+      "saveChanges": "Save Changes"
+    },
     "homePage": {
       "title": "Welcome!",
       "heading": "Focus on the journey, not the paperwork",

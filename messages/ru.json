@@ -6,6 +6,24 @@
       "saveAndExit": "Сохранить и выйти",
       "skip": "Пропустить пока"
     },
+    "profile": {
+      "title": "Настройки профиля",
+      "languageSettings": "Настройки языка",
+      "language": "Язык",
+      "selectLanguage": "Выберите язык",
+      "currencySettings": "Настройки валюты",
+      "currency": "Валюта",
+      "selectCurrency": "Выберите валюту",
+      "privacySettings": "Настройки конфиденциальности",
+      "privacyPolicy": "Политика конфиденциальности",
+      "view": "Просмотр",
+      "notificationSettings": "Настройки уведомлений",
+      "enableNotifications": "Включить уведомления",
+      "accountSecurity": "Безопасность аккаунта",
+      "deleteAccount": "Удалить аккаунт",
+      "delete": "Удалить",
+      "saveChanges": "Сохранить изменения"
+    },
     "homePage": {
       "title": "Добро пожаловать!",
       "heading": "Сосредоточьтесь на путешествии, не на бумагах",
