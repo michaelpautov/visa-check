@@ -14,7 +14,7 @@ export function OrderCard() {
   
   const destinationCountry = passportCountry.watch('flyToCountry')
 
-  const { days, maxTotalDays, shortName,officialName } = visaType.watch('selectedVisas.0')
+  const { day, maxTotalDays, shortName,officialName } = visaType.watch('selectedVisas.0')
   
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 
@@ -31,7 +31,7 @@ export function OrderCard() {
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <Small className="text-muted-foreground">{t('validFor')}</Small>
-            <span className="text-sm font-medium">{days} {t('days')}</span>
+            <span className="text-sm font-medium">{day} {t('days')}</span>
           </div>
           <div className="flex justify-between items-center">
             <Small className="text-muted-foreground">{t('maxStay')}</Small>

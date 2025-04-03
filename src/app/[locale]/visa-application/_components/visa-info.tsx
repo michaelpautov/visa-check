@@ -28,7 +28,7 @@ export function VisaInfo() {
                 className="grid grid-cols-[40%_15%_25%_20%] gap-x-2 items-center text-xs"
               >
                 <span className="font-medium">{visa.shortName}</span>
-                <span>{t('days', { days: visa.days })}</span>
+                <span>{t('days', { days: visa.day })}</span>
                 <span>{visa.extendable ? t('maxDays', { days: visa.maxTotalDays }) : t('notExtendable')}</span>
                 <span>{visa.price}$</span>
               </div>
