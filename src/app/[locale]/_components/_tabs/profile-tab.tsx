@@ -3,15 +3,15 @@
 import { useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/routing';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ControlledSelect, SelectOption } from '@/components/form-controls/controlled-select';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { routing } from '@/i18n/routing';
-import { MdLanguage, MdAttachMoney, MdPrivacyTip, MdNotifications, MdDelete, MdSecurity, MdSave } from 'react-icons/md';
+import { MdLanguage, MdAttachMoney, MdPrivacyTip, MdNotifications, MdDelete, MdSecurity, MdCheck } from 'react-icons/md';
+import { FaCheck } from 'react-icons/fa';
 
 // Language options based on the supported locales in routing.ts
 const LANGUAGE_OPTIONS: SelectOption[] = [
@@ -32,21 +32,33 @@ interface ProfileFormValues {
   currency: string;
 }
 
-export function ProfileTab() {
+interface ProfileTabProps {
+  tabsHeight: number;
+}
+
+export function ProfileTab({ tabsHeight }: ProfileTabProps) {
   const t = useTranslations('profile');
   const router = useRouter();
   const pathname = usePathname();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [hasChanges, setHasChanges] = useState(false);
   
   // Get current locale from URL or use default
   const currentLocale = pathname.split('/')[1] || routing.defaultLocale;
   
-  const { control, handleSubmit } = useForm<ProfileFormValues>({
+  const { control, handleSubmit, watch } = useForm<ProfileFormValues>({
     defaultValues: {
       language: currentLocale,
       currency: 'USD',
     }
   });
+
+  // Watch for form changes
+  const formValues = watch();
+  useEffect(() => {
+    const hasFormChanges = formValues.language !== currentLocale || formValues.currency !== 'USD';
+    setHasChanges(hasFormChanges);
+  }, [formValues, currentLocale]);
 
   const onSubmit = (data: ProfileFormValues) => {
     // Handle language change by redirecting to the new locale path
@@ -55,13 +67,8 @@ export function ProfileTab() {
     const pathSegments = pathname.split('/').slice(2);
     const pathWithoutLocale = '/' + pathSegments.join('/');
     
-    console.log('Current locale:', currentLocale);
-    console.log('New locale:', newLocale);
-    console.log('Path without locale:', pathWithoutLocale);
-    
     // If the new locale is the default (English), we need to handle it specially
     if (newLocale === 'en') {
-      console.log('Switching to English (default)');
       router.replace(pathWithoutLocale);
     } else if (newLocale !== currentLocale) {
       console.log('Switching to non-default locale:', newLocale);
@@ -73,18 +80,24 @@ export function ProfileTab() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      <div className="sticky top-0 z-10 bg-background border-b">
-        <div className="flex items-center justify-between px-2 py-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col " style={{height: `calc(100vh - ${tabsHeight}px)`}}>
+      <div className="flex-none bg-background px-6">
+        <div className="flex items-center justify-between py-4">
           <h1 className="text-2xl font-bold">{t('title')}</h1>
-          <Button type="submit" className="ml-4">
-            <MdSave className="w-4 h-4" />
-          </Button>
+          {hasChanges && (
+            <Button 
+              type="submit" 
+              variant="default"
+              className="ml-4 flex items-center gap-2" 
+            >
+              <FaCheck className="w-4 h-4" />
+            </Button>
+          )}
         </div>
       </div>
       
-      <div className="pt-10 h-[calc(100vh-230px)] overflow-y-auto">
-        <Card className="mx-2 p-4 space-y-6">
+      <div className="flex-1 overflow-y-auto px-6">
+        <div className="mx-2 py-4 space-y-6 bg-background/50 rounded-lg">
           {/* Language Settings */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
@@ -173,7 +186,7 @@ export function ProfileTab() {
               </Button>
             </div>
           </div>
-        </Card>
+        </div>
       </div>
     </form>
   );

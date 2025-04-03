@@ -66,10 +66,6 @@ export function useValidateEmailContent() {
       const title = titleMap[path] || 'Validation Error';
       toastError(title, message);
       
-      if (path === 'paymentProof' || path === 'passport') {
-        console.error(`${path} validation failed:`, dataToValidate[path as keyof typeof dataToValidate]);
-      }
-      
       return false;
     }
     

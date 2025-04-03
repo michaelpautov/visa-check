@@ -26,7 +26,7 @@ export function HomeTab() {
   }
 
   return (
-    <div className="flex flex-col items-center mx-auto space-y-8 py-8 h-full">
+    <div className="flex flex-col items-center mx-auto space-y-8 px-6 py-8 h-full">
       {/* Логотип */}
       <div className="w-48 text-center">
         <span className="text-6xl font-bold">iVisa</span>
