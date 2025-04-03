@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { useTranslations } from 'next-intl';
 import { FormControl } from "./form-control";
+import Image from "next/image";
 
 interface ControlledFileInputProps<T extends FieldValues> {
   name: Path<T>;
@@ -74,9 +75,11 @@ export function ControlledFileInput<T extends FieldValues>({
       {preview && (
         <>
           {preview.startsWith('data:image') ? (
-            <img 
+            <Image 
               src={preview} 
               alt="Preview" 
+              width={500}
+              height={300}
               className="w-full h-auto rounded-lg"
             />
           ) : (

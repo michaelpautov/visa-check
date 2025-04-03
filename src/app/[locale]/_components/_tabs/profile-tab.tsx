@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { routing } from '@/i18n/routing';
-import { MdLanguage, MdAttachMoney, MdPrivacyTip, MdNotifications, MdDelete, MdSecurity, MdCheck } from 'react-icons/md';
+import { MdLanguage, MdAttachMoney, MdPrivacyTip, MdNotifications, MdDelete, MdSecurity } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa';
 
 // Language options based on the supported locales in routing.ts

@@ -113,7 +113,7 @@ export const TypographyShowcase: Story = {
       <Lead>This is a lead paragraph that introduces the main content.</Lead>
       <P>This is a regular paragraph with standard text styling.</P>
       <H3>Code Examples</H3>
-      <P>Here's some text with <InlineCode>inline code</InlineCode>.</P>
+      <P>Here&apos;s some text with <InlineCode>inline code</InlineCode>.</P>
       <MultilineCode>
 {`// This is a code block
 function example() {
