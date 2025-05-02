@@ -38,6 +38,10 @@ export function CountrySelect({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
+
   const countriesList = Object.entries(countries).map(([code, country]) => ({
     code,
     ...country
@@ -55,7 +59,7 @@ export function CountrySelect({
   });
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -75,7 +79,14 @@ export function CountrySelect({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[280px] p-0">
+      <PopoverContent 
+        className="w-[var(--radix-popover-trigger-width)] p-0  overflow-x-auto  overflow-y-auto" 
+        side="bottom" 
+        align="start"
+        sideOffset={4}
+        forceMount
+        avoidCollisions={false}
+      >
         <div className="flex flex-col">
           <Input
             placeholder={searchPlaceholder || t('searchPlaceholder')}
@@ -83,7 +94,7 @@ export function CountrySelect({
             onChange={(e) => setSearch(e.target.value)}
             className="border-0 focus-visible:ring-0"
           />
-          <div className="max-h-[300px] overflow-y-auto">
+          <div className="max-h-[100px] overflow-y-auto overflow-x-hidden">
             {filteredCountries.map((country) => (
               <Button
                 key={country.code}

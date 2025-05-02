@@ -31,7 +31,7 @@ export function HomeClient() {
   };
 
   return (
-    <Tabs defaultValue={currentTab} onValueChange={handleTabChange} className="w-full h-screen flex flex-col">
+    <Tabs defaultValue={currentTab} onValueChange={handleTabChange} className="w-full h-full flex flex-col">
       <div className="flex-1 relative overflow-hidden">
         <AnimatePresence mode="wait">
           {currentTab === "home" && (
@@ -41,7 +41,7 @@ export function HomeClient() {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -300, opacity: 0 }}
               transition={{ type: "spring", stiffness: 500, damping: 40 }}
-              className="h-full"
+              className="h-full overflow-y-auto"
             >
               <TabsContent value="home" className="h-full"><HomeTab /></TabsContent>
             </motion.div>
@@ -53,7 +53,7 @@ export function HomeClient() {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -300, opacity: 0 }}
               transition={{ type: "spring", stiffness: 500, damping: 40 }}
-              className="h-full"
+              className="h-full overflow-y-auto"
             >
               <TabsContent value="documents" className="h-full">Documents</TabsContent>
             </motion.div>
@@ -65,14 +65,14 @@ export function HomeClient() {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: -300, opacity: 0 }}
               transition={{ type: "spring", stiffness: 500, damping: 40 }}
-              className="h-full"
+              className="h-full overflow-y-auto"
             >
               <TabsContent value="profile" className="h-full"><ProfileTab tabsHeight={tabsHeight} /></TabsContent>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-      <TabsList ref={tabsListRef} className="flex-none rounded-none bg-background w-full flex justify-between items-center p-6 h-auto ">
+      <TabsList ref={tabsListRef} className="flex-none rounded-none bg-background w-full flex justify-between items-center p-4 h-auto border-t">
         <TabsTrigger 
           value="home" 
           className={triggerClassName}

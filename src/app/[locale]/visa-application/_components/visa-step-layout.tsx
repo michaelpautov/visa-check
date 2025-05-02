@@ -29,7 +29,7 @@ export function VisaStepLayout({ children }: StepLayoutProps) {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen max-h-screen">
       <div className="flex-none bg-background m-4 space-y-4">
         <div className="flex flex-row items-center justify-between">
           <Button className="-ml-4 hover:bg-transparent hover:text-primary" variant="ghost" onClick={handleBack}>
@@ -40,11 +40,11 @@ export function VisaStepLayout({ children }: StepLayoutProps) {
         <Progress value={((steps.indexOf(currentStep) + 1) / steps.length) * 100} />
       </div>
 
-      <main className="flex-1 overflow-auto mx-4">
+      <main className="flex-1 overflow-y-auto mx-4 pb-24">
         {children}
       </main>
 
-      <div className="flex-none p-4 bg-background">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background">
         <VisaStepLayoutButton />
       </div>
     </div>

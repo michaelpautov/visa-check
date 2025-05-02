@@ -9,7 +9,7 @@ type Props = {
 
 export function VisaStepContainer({ children, className }: Props) {
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("space-y-4 border-0", className)}>
       {children}
     </div>
   );

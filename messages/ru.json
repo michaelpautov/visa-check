@@ -74,12 +74,14 @@
       },
       "passportCountryStep": {
         "title": "Какие у вас планы на путешествие",
+        "subtitle": "Пожалуйста, выберите страну вашего паспорта и пункт назначения",
         "passportFrom": "Мой паспорт из",
         "visitCountry": "Я хочу посетить"
       },
       "countrySelect": {
         "placeholder": "Выбрать",
-        "searchPlaceholder": "Поиск стран..."
+        "searchPlaceholder": "Поиск стран...",
+        "selectCountry": "Выберите страну"
       },
       "visaRoute": {
         "passportFrom": "Паспорт из"

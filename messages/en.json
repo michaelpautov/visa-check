@@ -74,12 +74,14 @@
       },
       "passportCountryStep": {
         "title": "What are your travel plans",
+        "subtitle": "Please select your passport country and destination",
         "passportFrom": "My passport is from",
         "visitCountry": "I want to visit"
       },
       "countrySelect": {
         "placeholder": "Select",
-        "searchPlaceholder": "Search countries..."
+        "searchPlaceholder": "Search countries...",
+        "selectCountry": "Select country"
       },
       "visaRoute": {
         "passportFrom": "Passport from"
